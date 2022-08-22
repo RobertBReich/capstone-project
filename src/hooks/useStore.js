@@ -1,16 +1,23 @@
 import create from 'zustand';
 
-const useStore = create(set => ({
-	counter: 0,
-	setCounter(counter) {
-		set({counter});
+export const useStore = create(set => ({
+	arrData: [],
+	arrConfiguration: [],
+
+	setData: item => {
+		// eslint-disable-next-line no-unused-vars
+		set(state => {
+			return {
+				arrData: item,
+			};
+		});
 	},
-	decrementCounter(step = 1) {
-		set(({counter}) => ({counter: counter - step}));
-	},
-	incrementCounter(step = 1) {
-		set(({counter}) => ({counter: counter + step}));
+
+	setConfiguration: item => {
+		// eslint-disable-next-line no-unused-vars
+		set(state => {
+			return {arrConfiguration: item};
+		});
 	},
 }));
-
 export default useStore;

@@ -1,76 +1,57 @@
-import {nanoid} from 'nanoid';
 import Head from 'next/head';
-import {useState} from 'react';
+import {useEffect} from 'react';
 
-import Button from '../components/Button';
 import Layout from '../components/Layout';
-import useFetch from '../hooks/useFetch';
+import MovieList from '../components/MovieList';
 import useStore from '../hooks/useStore';
 
+const API_KEY = 'cfe8f1e1a9b233b64412ec3cd0525b67';
+const GET_CONFIGURATION = 'https://api.themoviedb.org/3/configuration?api_key=' + API_KEY;
+
+const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+
+// for later
+
+//const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${firstpage}&with_genres=${genres}`;
+//const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=1e37d8deae00c9b519356f5d9412edbb&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${firstpage}&with_genres=${genres}`;
+
 export default function HomePage() {
-	// Data
-	const {data, loading, error} = useFetch('/api/hello');
-
-	// Local state
-	const [id, setId] = useState(null);
-
 	// Global state
-	const counter = useStore(state => state.counter);
-	const decrementCounter = useStore(state => state.decrementCounter);
-	const incrementCounter = useStore(state => state.incrementCounter);
-	const setCounter = useStore(state => state.setCounter);
+	const setConfiguration = useStore(state => state.setConfiguration);
+	const setData = useStore(state => state.setData);
+
+	useEffect(() => {
+		Promise.all([fetch(GET_CONFIGURATION), fetch(GET_MOVIES)])
+			.then(function (responses) {
+				return Promise.all(
+					responses.map(function (response) {
+						return response.json();
+					})
+				);
+			})
+			.then(function (data) {
+				console.log('Promise.all() should be done.');
+				console.log(data);
+				setConfiguration(data[0].images);
+				setData(data[1].results);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}, [setConfiguration, setData]);
 
 	return (
 		<Layout>
 			<Head>
-				<title key="title">My Project</title>
-				<meta key="description" name="description" content="This is my project" />
-			</Head>
-			<h1>Home</h1>
-			{loading && <div>Loading...</div>}
-			{error && <div>{error.message}</div>}
-			{data && (
-				<pre>
-					<code>{JSON.stringify(data, null, 4)}</code>
-				</pre>
-			)}
-			<section>
-				<Button
-					aria-label="decrement"
-					onClick={() => {
-						decrementCounter();
-					}}
-				>
-					-
-				</Button>
-				<input
-					value={`${counter}`}
-					size={2}
-					onChange={event => {
-						setCounter(Number.parseInt(event.target.value, 10));
-					}}
+				<title key="title">Favorite Movie App</title>
+				<meta
+					key="description"
+					name="description"
+					content="Robert Reichs capstone project"
 				/>
-				<Button
-					aria-label="increment"
-					onClick={() => {
-						incrementCounter();
-					}}
-				>
-					+
-				</Button>
-			</section>
-			<br />
-			<section>
-				<Button
-					onClick={() => {
-						setId(nanoid());
-					}}
-				>
-					Generate ID
-				</Button>
-				<br />
-				<div>Id: {id}</div>
-			</section>
+			</Head>
+			<h1>Movie Bookmark App</h1>
+			<MovieList />
 		</Layout>
 	);
 }
