@@ -35,7 +35,7 @@ export default function HomePage() {
 			.catch(function (error) {
 				console.log(error);
 			});
-	}, []);
+	}, [setConfiguration, setData]);
 
 	return (
 		<Layout>
