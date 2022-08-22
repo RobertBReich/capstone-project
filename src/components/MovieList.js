@@ -8,27 +8,22 @@ const Section = styled.section`
 `;
 
 const Article = styled.article`
-	padding: 0px 0px;
-	background-color: #515151;
-	color: #fff;
-	border-radius: 20px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
-	border: 1px solid rgba(#e3e3e3, 1);
-	background-color: #fff;
 	max-width: 154px;
-
-	opacity: 0;
+	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 20px;
+	opacity: 0;
+	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
+	color: #fff;
+
 	@keyframes fadeIn {
 		0% {
 			opacity: 0;
-			//bottom: -8px;
 		}
 		100% {
 			opacity: 1;
-			//bottom: 0px;
 		}
 	}
 `;
