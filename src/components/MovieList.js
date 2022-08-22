@@ -47,15 +47,11 @@ const Movieheadline = styled.p`
 export default function MovieList() {
 	const arrData = useStore(state => state.arrData);
 	const setData = useStore(state => state.setData);
-
 	const arrConfiguration = useStore(state => state.arrConfiguration);
+	const isConfigurationLoaded = useStore(state => state.isConfigurationLoaded);
 
-	// Error prolly while Promise.all load, .poster_sizes[0] is undefined
-
-	//console.log(arrConfiguration['backdrop_sizes'][0]);
-	// (7)['w92', 'w154', 'w185', 'w342', 'w500', 'w780', 'original']
-	const imagesBaseUrl = arrConfiguration.base_url + 'w154';
-	console.log('MovieList Component -> typeof: ' + typeof arrConfiguration.poster_sizes);
+	const imageWidth = !isConfigurationLoaded ? arrConfiguration.poster_sizes : 'w154';
+	const imagesBaseUrl = arrConfiguration.base_url + imageWidth;
 
 	function fetchUrl(url) {
 		fetch(url)
@@ -87,14 +83,16 @@ export default function MovieList() {
 				<Button onClick={loadTVShows}>TV-Shows</Button>
 			</h2>
 			<Grid>
-				{arrData.map((item, index) => {
-					return (
-						<Article key={item.id} delay={0.05 * index}>
-							<Picture src={imagesBaseUrl + item.poster_path} />
-							<Movieheadline>{item.title || item.name}</Movieheadline>
-						</Article>
-					);
-				})}
+				{isConfigurationLoaded
+					? arrData.map((item, index) => {
+							return (
+								<Article key={item.id} delay={0.05 * index}>
+									<Picture src={imagesBaseUrl + item.poster_path} />
+									<Movieheadline>{item.title || item.name}</Movieheadline>
+								</Article>
+							);
+					  })
+					: null}
 			</Grid>
 		</Section>
 	);

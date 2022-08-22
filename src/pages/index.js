@@ -16,9 +16,10 @@ export default function HomePage() {
 	// Global state
 	const setConfiguration = useStore(state => state.setConfiguration);
 	const setData = useStore(state => state.setData);
+	const setConfigurationLoaded = useStore(state => state.setConfigurationLoaded);
 
 	useEffect(() => {
-		Promise.all([fetch(GET_CONFIGURATION), fetch(GET_TV)])
+		Promise.all([fetch(GET_TV), fetch(GET_CONFIGURATION)])
 			.then(function (responses) {
 				return Promise.all(
 					responses.map(function (response) {
@@ -29,13 +30,14 @@ export default function HomePage() {
 			.then(function (data) {
 				console.log('Promise.all() should be done.');
 				console.log(data);
-				setConfiguration(data[0].images);
-				setData(data[1].results);
+				setConfiguration(data[1].images);
+				setData(data[0].results);
+				setConfigurationLoaded(true);
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
-	}, [setConfiguration, setData]);
+	}, [setConfiguration, setConfigurationLoaded, setData]);
 
 	return (
 		<Layout>
