@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 import useStore from './../hooks/useStore';
+import Button from './Button';
 
-const Div = styled.div`
+const Section = styled.section`
 	padding: 16px;
-	margin: 0 auto;
-	max-width: 800px;
 `;
 
 const Article = styled.article`
@@ -19,6 +18,19 @@ const Article = styled.article`
 	border: 1px solid rgba(#e3e3e3, 1);
 	background-color: #fff;
 	max-width: 154px;
+
+	opacity: 0;
+	animation: fadeIn 1s ${({delay}) => delay}s forwards;
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+			//bottom: -8px;
+		}
+		100% {
+			opacity: 1;
+			//bottom: 0px;
+		}
+	}
 `;
 
 const Picture = styled.img`
@@ -28,7 +40,7 @@ const Picture = styled.img`
 const Grid = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 16px;
 `;
 
 const Movieheadline = styled.p`
@@ -39,6 +51,8 @@ const Movieheadline = styled.p`
 
 export default function MovieList() {
 	const arrData = useStore(state => state.arrData);
+	const setData = useStore(state => state.setData);
+
 	const arrConfiguration = useStore(state => state.arrConfiguration);
 
 	// Error prolly while Promise.all load, .poster_sizes[0] is undefined
@@ -48,19 +62,45 @@ export default function MovieList() {
 	const imagesBaseUrl = arrConfiguration.base_url + 'w154';
 	console.log('MovieList Component -> typeof: ' + typeof arrConfiguration.poster_sizes);
 
+	function fetchUrl(url) {
+		fetch(url)
+			.then(res => res.json())
+			.then(data => {
+				setData(data.results);
+			});
+	}
+
+	function loadMovies() {
+		//
+		console.log('Movies');
+		fetchUrl(
+			'https://api.themoviedb.org/3/discover/movie?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
+		);
+	}
+	function loadTVShows() {
+		//
+		console.log('TV-Shows');
+		fetchUrl(
+			'https://api.themoviedb.org/3/discover/tv?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
+		);
+	}
+
 	return (
-		<Div>
-			<h1>Die Movie Liste</h1>
+		<Section>
+			<h2>
+				<Button onClick={loadMovies}>Movies</Button>
+				<Button onClick={loadTVShows}>TV-Shows</Button>
+			</h2>
 			<Grid>
-				{arrData.map(item => {
+				{arrData.map((item, index) => {
 					return (
-						<Article key={item.id}>
+						<Article key={item.id} delay={0.05 * index}>
 							<Picture src={imagesBaseUrl + item.poster_path} />
-							<Movieheadline>{item.title}</Movieheadline>
+							<Movieheadline>{item.title || item.name}</Movieheadline>
 						</Article>
 					);
 				})}
 			</Grid>
-		</Div>
+		</Section>
 	);
 }

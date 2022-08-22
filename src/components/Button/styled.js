@@ -6,16 +6,16 @@ const StyledButton = styled.button`
 	padding: 0.5em 1em;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: ${pxToRem(4)};
-	background: #fae;
+	background: #e0e0e0;
 	color: #000;
-	font-size: 1em;
+	font-size: 0.5em;
 
 	&:hover {
-		background: #d8b;
+		background: #d0d0d0;
 	}
 
 	&:active {
-		background: #bad;
+		background: #e0e0e0;
 	}
 `;
 
