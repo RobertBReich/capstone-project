@@ -79,7 +79,7 @@ export default function MovieList() {
 	}
 	function loadTVShows() {
 		fetchUrl(
-			`https://api.themo---viedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
+			`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 		);
 	}
 
