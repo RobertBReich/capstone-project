@@ -7,6 +7,9 @@ const Section = styled.section`
 	padding: 16px;
 `;
 
+const ButtonContainer = styled.div`
+	font-size: 1.5rem;
+`;
 const Article = styled.article`
 	max-width: 154px;
 	padding: 0;
@@ -60,15 +63,11 @@ export default function MovieList() {
 	}
 
 	function loadMovies() {
-		//
-		console.log('Movies');
 		fetchUrl(
 			'https://api.themoviedb.org/3/discover/movie?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
 		);
 	}
 	function loadTVShows() {
-		//
-		console.log('TV-Shows');
 		fetchUrl(
 			'https://api.themoviedb.org/3/discover/tv?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
 		);
@@ -76,10 +75,10 @@ export default function MovieList() {
 
 	return (
 		<Section>
-			<h2>
+			<ButtonContainer>
 				<Button onClick={loadMovies}>Movies</Button>
 				<Button onClick={loadTVShows}>TV-Shows</Button>
-			</h2>
+			</ButtonContainer>
 			<Container>
 				{arrData.map((item, index) => {
 					return (

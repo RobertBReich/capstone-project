@@ -34,7 +34,7 @@ export default function HomePage() {
 				);
 			})
 			.then(function (data) {
-				console.log('Promise.all() should be done.');
+				console.log('Data');
 				console.log(data);
 
 				setConfiguration(data[1].images);
