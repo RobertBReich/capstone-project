@@ -32,7 +32,7 @@ const Picture = styled.img`
 	border-radius: 20px 20px 0 0;
 `;
 
-const Grid = styled.div`
+const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	gap: 16px;
@@ -80,7 +80,7 @@ export default function MovieList() {
 				<Button onClick={loadMovies}>Movies</Button>
 				<Button onClick={loadTVShows}>TV-Shows</Button>
 			</h2>
-			<Grid>
+			<Container>
 				{arrData.map((item, index) => {
 					return (
 						<Article key={item.id} delay={0.05 * index}>
@@ -89,7 +89,7 @@ export default function MovieList() {
 						</Article>
 					);
 				})}
-			</Grid>
+			</Container>
 		</Section>
 	);
 }

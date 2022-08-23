@@ -19,7 +19,12 @@ export default function HomePage() {
 	const setConfigurationLoaded = useStore(state => state.setConfigurationLoaded);
 	const isConfigurationLoaded = useStore(state => state.isConfigurationLoaded);
 
+	const hasLoadingErrorOccured = useStore(state => state.hasLoadingErrorOccured);
+	const setLoadingErrorOccured = useStore(state => state.setLoadingErrorOccured);
+
 	useEffect(() => {
+		if (hasLoadingErrorOccured) setLoadingErrorOccured(false);
+
 		Promise.all([fetch(GET_TV), fetch(GET_CONFIGURATION)])
 			.then(function (responses) {
 				return Promise.all(
@@ -31,14 +36,22 @@ export default function HomePage() {
 			.then(function (data) {
 				console.log('Promise.all() should be done.');
 				console.log(data);
+
 				setConfiguration(data[1].images);
 				setData(data[0].results);
 				setConfigurationLoaded(true);
 			})
 			.catch(function (error) {
-				console.log(error);
+				console.log('Error: ' + error);
+				setLoadingErrorOccured(true);
 			});
-	}, [setConfiguration, setConfigurationLoaded, setData]);
+	}, [
+		hasLoadingErrorOccured,
+		setConfiguration,
+		setConfigurationLoaded,
+		setData,
+		setLoadingErrorOccured,
+	]);
 
 	return (
 		<Layout>
@@ -50,6 +63,9 @@ export default function HomePage() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
+			{hasLoadingErrorOccured ? (
+				<p>The content could not be loaded. Please try again.</p>
+			) : null}
 			{isConfigurationLoaded ? <MovieList /> : null}
 		</Layout>
 	);

@@ -4,6 +4,7 @@ export const useStore = create(set => ({
 	arrData: [],
 	arrConfiguration: [],
 	isConfigurationLoaded: false,
+	hasLoadingErrorOccured: false,
 
 	setData: item => {
 		// eslint-disable-next-line no-unused-vars
@@ -25,6 +26,14 @@ export const useStore = create(set => ({
 		set(state => {
 			return {
 				isConfigurationLoaded: bool,
+			};
+		});
+	},
+	setLoadingErrorOccured: bool => {
+		// eslint-disable-next-line no-unused-vars
+		set(state => {
+			return {
+				hasLoadingErrorOccured: bool,
 			};
 		});
 	},
