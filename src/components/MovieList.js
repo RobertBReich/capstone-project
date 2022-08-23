@@ -51,16 +51,24 @@ export default function MovieList() {
 	const arrData = useStore(state => state.arrData);
 	const setData = useStore(state => state.setData);
 	const arrConfiguration = useStore(state => state.arrConfiguration);
+	const hasLoadingErrorOccured = useStore(state => state.hasLoadingErrorOccured);
+	const setLoadingErrorOccured = useStore(state => state.setLoadingErrorOccured);
 
 	const imagesBaseUrl = arrConfiguration.base_url + arrConfiguration.poster_sizes[1];
 
 	const API_KEY = process.env.API_KEY;
 
 	function fetchUrl(url) {
+		setLoadingErrorOccured(false);
 		fetch(url)
 			.then(res => res.json())
 			.then(data => {
 				setData(data.results);
+			})
+			.catch(function (error) {
+				console.log(error);
+				setLoadingErrorOccured(true);
+				setData([]);
 			});
 	}
 
@@ -71,7 +79,7 @@ export default function MovieList() {
 	}
 	function loadTVShows() {
 		fetchUrl(
-			`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
+			`https://api.themo---viedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 		);
 	}
 
@@ -81,15 +89,20 @@ export default function MovieList() {
 				<Button onClick={loadMovies}>Movies</Button>
 				<Button onClick={loadTVShows}>TV-Shows</Button>
 			</ButtonContainer>
+
 			<Container>
-				{arrData.map((item, index) => {
-					return (
-						<Article key={item.id} delay={0.05 * index}>
-							<Picture src={imagesBaseUrl + item.poster_path} />
-							<MovieHeadline>{item.title || item.name}</MovieHeadline>
-						</Article>
-					);
-				})}
+				{hasLoadingErrorOccured ? (
+					<p>The content could not be loaded. Please try again.</p>
+				) : (
+					arrData.map((item, index) => {
+						return (
+							<Article key={item.id} delay={0.05 * index}>
+								<Picture src={imagesBaseUrl + item.poster_path} />
+								<MovieHeadline>{item.title || item.name}</MovieHeadline>
+							</Article>
+						);
+					})
+				)}
 			</Container>
 		</Section>
 	);
