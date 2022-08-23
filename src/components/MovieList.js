@@ -41,7 +41,7 @@ const Container = styled.div`
 	gap: 16px;
 `;
 
-const Movieheadline = styled.p`
+const MovieHeadline = styled.p`
 	padding: 8px 8px 16px 8px;
 	color: black;
 	overflow-wrap: break-word;
@@ -54,6 +54,8 @@ export default function MovieList() {
 
 	const imagesBaseUrl = arrConfiguration.base_url + arrConfiguration.poster_sizes[1];
 
+	const API_KEY = process.env.API_KEY;
+
 	function fetchUrl(url) {
 		fetch(url)
 			.then(res => res.json())
@@ -64,12 +66,12 @@ export default function MovieList() {
 
 	function loadMovies() {
 		fetchUrl(
-			'https://api.themoviedb.org/3/discover/movie?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
+			`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 		);
 	}
 	function loadTVShows() {
 		fetchUrl(
-			'https://api.themoviedb.org/3/discover/tv?api_key=cfe8f1e1a9b233b64412ec3cd0525b67&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'
+			`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 		);
 	}
 
@@ -84,7 +86,7 @@ export default function MovieList() {
 					return (
 						<Article key={item.id} delay={0.05 * index}>
 							<Picture src={imagesBaseUrl + item.poster_path} />
-							<Movieheadline>{item.title || item.name}</Movieheadline>
+							<MovieHeadline>{item.title || item.name}</MovieHeadline>
 						</Article>
 					);
 				})}

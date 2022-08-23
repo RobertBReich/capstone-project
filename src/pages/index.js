@@ -5,14 +5,15 @@ import Layout from '../components/Layout';
 import MovieList from '../components/MovieList';
 import useStore from '../hooks/useStore';
 
-const API_KEY = 'cfe8f1e1a9b233b64412ec3cd0525b67';
-const GET_CONFIGURATION = 'https://api.themoviedb.org/3/configuration?api_key=' + API_KEY;
-
-//const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
-
-const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
-
 export default function HomePage() {
+	const API_KEY = process.env.API_KEY;
+
+	const GET_CONFIGURATION = `https://api.themoviedb.org/3/configuration?api_key=${API_KEY}`;
+
+	//const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+
+	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+
 	// Global state
 	const setConfiguration = useStore(state => state.setConfiguration);
 	const setData = useStore(state => state.setData);
@@ -34,9 +35,6 @@ export default function HomePage() {
 				);
 			})
 			.then(function (data) {
-				console.log('Data');
-				console.log(data);
-
 				setConfiguration(data[1].images);
 				setData(data[0].results);
 				setConfigurationLoaded(true);
@@ -46,6 +44,8 @@ export default function HomePage() {
 				setLoadingErrorOccured(true);
 			});
 	}, [
+		GET_CONFIGURATION,
+		GET_TV,
 		hasLoadingErrorOccured,
 		setConfiguration,
 		setConfigurationLoaded,
@@ -63,6 +63,7 @@ export default function HomePage() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
+
 			{hasLoadingErrorOccured ? (
 				<p>The content could not be loaded. Please try again.</p>
 			) : null}
