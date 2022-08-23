@@ -48,10 +48,8 @@ export default function MovieList() {
 	const arrData = useStore(state => state.arrData);
 	const setData = useStore(state => state.setData);
 	const arrConfiguration = useStore(state => state.arrConfiguration);
-	const isConfigurationLoaded = useStore(state => state.isConfigurationLoaded);
 
-	const imageWidth = !isConfigurationLoaded ? arrConfiguration.poster_sizes : 'w154';
-	const imagesBaseUrl = arrConfiguration.base_url + imageWidth;
+	const imagesBaseUrl = arrConfiguration.base_url + arrConfiguration.poster_sizes[1];
 
 	function fetchUrl(url) {
 		fetch(url)
@@ -83,16 +81,14 @@ export default function MovieList() {
 				<Button onClick={loadTVShows}>TV-Shows</Button>
 			</h2>
 			<Grid>
-				{isConfigurationLoaded
-					? arrData.map((item, index) => {
-							return (
-								<Article key={item.id} delay={0.05 * index}>
-									<Picture src={imagesBaseUrl + item.poster_path} />
-									<Movieheadline>{item.title || item.name}</Movieheadline>
-								</Article>
-							);
-					  })
-					: null}
+				{arrData.map((item, index) => {
+					return (
+						<Article key={item.id} delay={0.05 * index}>
+							<Picture src={imagesBaseUrl + item.poster_path} />
+							<Movieheadline>{item.title || item.name}</Movieheadline>
+						</Article>
+					);
+				})}
 			</Grid>
 		</Section>
 	);

@@ -17,6 +17,7 @@ export default function HomePage() {
 	const setConfiguration = useStore(state => state.setConfiguration);
 	const setData = useStore(state => state.setData);
 	const setConfigurationLoaded = useStore(state => state.setConfigurationLoaded);
+	const isConfigurationLoaded = useStore(state => state.isConfigurationLoaded);
 
 	useEffect(() => {
 		Promise.all([fetch(GET_TV), fetch(GET_CONFIGURATION)])
@@ -49,7 +50,7 @@ export default function HomePage() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
-			<MovieList />
+			{isConfigurationLoaded ? <MovieList /> : null}
 		</Layout>
 	);
 }
