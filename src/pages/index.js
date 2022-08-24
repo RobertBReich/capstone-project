@@ -1,62 +1,37 @@
 import Head from 'next/head';
-import {useEffect} from 'react';
+import styled from 'styled-components';
 
 import Layout from '../components/Layout';
-import MovieList from '../components/MovieList';
-import useStore from '../hooks/useStore';
+import MovieListSmall from '../components/MovieListSmall';
+import SingleItem from '../components/SingleItem';
+import useFetch from '../hooks/useFetch';
 
-export default function HomePage() {
+const Ho2 = styled.h2`
+	margin: 32px 16px 0 8px;
+	padding: 12px 8px 16px 12px;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 24px;
+`;
+
+export default function Movies() {
+	//
 	const API_KEY = process.env.API_KEY;
 
-	const GET_CONFIGURATION = `https://api.themoviedb.org/3/configuration?api_key=${API_KEY}`;
-
-	//const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
 	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-	// Global state
-	const setConfiguration = useStore(state => state.setConfiguration);
-	const setData = useStore(state => state.setData);
-	const setConfigurationLoaded = useStore(state => state.setConfigurationLoaded);
-	const isConfigurationLoaded = useStore(state => state.isConfigurationLoaded);
+	const GET_EDITORPICK = `https://api.themoviedb.org/3/movie/438631?api_key=${API_KEY}&language=en-US`;
 
-	const hasLoadingErrorOccured = useStore(state => state.hasLoadingErrorOccured);
-	const setLoadingErrorOccured = useStore(state => state.setLoadingErrorOccured);
-
-	useEffect(() => {
-		if (hasLoadingErrorOccured) setLoadingErrorOccured(false);
-
-		Promise.all([fetch(GET_TV), fetch(GET_CONFIGURATION)])
-			.then(function (responses) {
-				return Promise.all(
-					responses.map(function (response) {
-						return response.json();
-					})
-				);
-			})
-			.then(function (data) {
-				setConfiguration(data[1].images);
-				setData(data[0].results);
-				setConfigurationLoaded(true);
-			})
-			.catch(function (error) {
-				console.log('Error: ' + error);
-				setLoadingErrorOccured(true);
-			});
-	}, [
-		GET_CONFIGURATION,
-		GET_TV,
-		hasLoadingErrorOccured,
-		setConfiguration,
-		setConfigurationLoaded,
-		setData,
-		setLoadingErrorOccured,
-	]);
+	const {loading: loadingSingle, error: errorSingle, data: dataSingle} = useFetch(GET_EDITORPICK);
+	const {loading, error, data} = useFetch(GET_MOVIES);
+	const {loading: loadingTV, error: errorTV, data: dataTV} = useFetch(GET_TV);
 
 	return (
 		<Layout>
 			<Head>
-				<title key="title">Favorite Movie App</title>
+				<title key="title">Movie Bookmark App</title>
 				<meta
 					key="description"
 					name="description"
@@ -64,10 +39,19 @@ export default function HomePage() {
 				/>
 			</Head>
 
-			{hasLoadingErrorOccured ? (
-				<p>The content could not be loaded. Please try again.</p>
-			) : null}
-			{isConfigurationLoaded ? <MovieList /> : null}
+			{loadingSingle && <p>Loading...</p>}
+			{errorSingle && <p>The content could not be loaded. Please try again.</p>}
+			{dataSingle && <SingleItem data={dataSingle} />}
+
+			<Ho2>The newest Movies you need to see</Ho2>
+			{loading && <p>Loading...</p>}
+			{error && <p>The content could not be loaded. Please try again.</p>}
+			{data && <MovieListSmall data={data.results} />}
+
+			<Ho2>The newest TV Series in town</Ho2>
+			{loadingTV && <p>Loading...</p>}
+			{errorTV && <p>The content could not be loaded. Please try again.</p>}
+			{dataTV && <MovieListSmall data={dataTV.results} />}
 		</Layout>
 	);
 }

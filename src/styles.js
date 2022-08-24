@@ -25,13 +25,13 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-
 	line-height: 1;
 }
 ol, ul {
@@ -49,6 +49,7 @@ table {
 	border-spacing: 0;
 	border-collapse: collapse;
 }
+
 /* additional styling that is not part of the css restet */
 *,
 *::before,
@@ -59,8 +60,8 @@ html {
 	font-size: 16px;
 }
 
+/* 	vendor reset files 	*/
 body {
-	margin: 0;
 	color: black;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	font-size: 1rem;
