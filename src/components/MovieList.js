@@ -14,11 +14,11 @@ const Article = styled.article`
 	max-width: 154px;
 	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	border-radius: 20px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 16px;
 	opacity: 0;
 	background-color: #fff;
-	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: #fff;
 
 	@keyframes fadeIn {
@@ -32,7 +32,8 @@ const Article = styled.article`
 `;
 
 const Picture = styled.img`
-	border-radius: 20px 20px 0 0;
+	border-radius: 16px 16px 0 0;
+	max-width: 153px;
 `;
 
 const Container = styled.div`
@@ -42,7 +43,7 @@ const Container = styled.div`
 `;
 
 const MovieHeadline = styled.p`
-	padding: 8px 8px 16px 8px;
+	padding: 8px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
 `;
@@ -89,7 +90,6 @@ export default function MovieList() {
 				<Button onClick={loadMovies}>Movies</Button>
 				<Button onClick={loadTVShows}>TV-Shows</Button>
 			</ButtonContainer>
-
 			<Container>
 				{hasLoadingErrorOccured ? (
 					<p>The content could not be loaded. Please try again.</p>
