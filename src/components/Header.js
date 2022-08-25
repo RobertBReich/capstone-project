@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-const Container = styled.header`
+const HeaderContainer = styled.header`
 	display: flex;
 	flex-wrap: wrap;
 	gap: 16px;
@@ -9,11 +9,11 @@ const Container = styled.header`
 
 export default function Header() {
 	return (
-		<Container>
+		<HeaderContainer>
 			<nav>
 				<Link href="/">Home</Link> | <Link href="/movies">Movies</Link> |{' '}
 				<Link href="/tvshows">TV Shows</Link>
 			</nav>
-		</Container>
+		</HeaderContainer>
 	);
 }
