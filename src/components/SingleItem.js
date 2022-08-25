@@ -35,7 +35,7 @@ const Article = styled.article`
 
 export default function SingleItem(data) {
 	const arrData = data.data;
-	console.log(arrData);
+
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
 
