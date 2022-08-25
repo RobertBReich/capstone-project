@@ -9,7 +9,6 @@ const Picture = styled.img`
 `;
 
 const MovieHeadline = styled.p`
-	/* min-height: 56px; */
 	padding: 12px 8px 0 16px;
 	color: black;
 	overflow-wrap: break-word;
@@ -33,8 +32,8 @@ const Article = styled.article`
 	}
 `;
 
-export default function SingleItem(data) {
-	const arrData = data.data;
+export default function SingleItem(props) {
+	const objData = props.data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
@@ -42,13 +41,13 @@ export default function SingleItem(data) {
 	return (
 		<section>
 			<Ho2>Editor´s Pick</Ho2>
-			<MovieHeadline>{arrData.title || arrData.name}</MovieHeadline>
+			<MovieHeadline>{objData.title || objData.name}</MovieHeadline>
 			<Article>
 				<div>
-					<Picture src={imagesBaseUrl + arrData.poster_path} />
+					<Picture src={imagesBaseUrl + objData.poster_path} />
 				</div>
 				<div>
-					<p>{arrData.overview}</p>
+					<p>{objData.overview}</p>
 				</div>
 			</Article>
 		</section>

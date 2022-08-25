@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 import useStore from './../hooks/useStore';
 
-const Section = styled.section`
-	padding: 16px;
-`;
-
 /* Used pic width's w154 & w185 */
 const Article = styled.article`
 	max-width: 187px;
@@ -37,6 +33,7 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	gap: 16px;
+	padding: 16px;
 `;
 
 const MovieHeadline = styled.p`
@@ -46,24 +43,21 @@ const MovieHeadline = styled.p`
 	overflow-wrap: break-word;
 `;
 
-export default function MovieList(data) {
-	//
-	const arrData = data.data;
+export default function MovieList(props) {
+	const arrData = props.data;
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
 
 	return (
-		<Section>
-			<Container>
-				{arrData.map((item, index) => {
-					return (
-						<Article key={item.id} delay={0.05 * index}>
-							<Picture src={imagesBaseUrl + item.poster_path} />
-							<MovieHeadline>{item.title || item.name}</MovieHeadline>
-						</Article>
-					);
-				})}
-			</Container>
-		</Section>
+		<Container>
+			{arrData.map((item, index) => {
+				return (
+					<Article key={item.id} delay={0.05 * index}>
+						<Picture src={imagesBaseUrl + item.poster_path} />
+						<MovieHeadline>{item.title || item.name}</MovieHeadline>
+					</Article>
+				);
+			})}
+		</Container>
 	);
 }

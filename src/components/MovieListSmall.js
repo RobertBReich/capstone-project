@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 import useStore from '../hooks/useStore';
 
-const Section = styled.section`
-	padding: 16px;
-`;
-
 /* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
 	max-width: 156px;
@@ -36,6 +32,7 @@ const Picture = styled.img`
 const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	padding: 16px;
 	gap: 16px;
 `;
 
@@ -46,25 +43,22 @@ const MovieHeadline = styled.p`
 	overflow-wrap: break-word;
 `;
 
-export default function MovieListSmall(data) {
-	//
-	const arrData = data.data;
+export default function MovieListSmall(props) {
+	const arrData = props.data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
 
 	return (
-		<Section>
-			<Container>
-				{arrData.slice(0, 4).map((item, index) => {
-					return (
-						<Article key={item.id} delay={0.05 * index}>
-							<Picture src={imagesBaseUrl + item.poster_path} />
-							<MovieHeadline>{item.title || item.name}</MovieHeadline>
-						</Article>
-					);
-				})}
-			</Container>
-		</Section>
+		<Container>
+			{arrData.slice(0, 4).map((item, index) => {
+				return (
+					<Article key={item.id} delay={0.05 * index}>
+						<Picture src={imagesBaseUrl + item.poster_path} />
+						<MovieHeadline>{item.title || item.name}</MovieHeadline>
+					</Article>
+				);
+			})}
+		</Container>
 	);
 }
