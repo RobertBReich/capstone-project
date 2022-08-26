@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
 import useStore from './../hooks/useStore';
@@ -44,6 +45,7 @@ const MovieHeadline = styled.p`
 `;
 
 export default function MovieList(props) {
+	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
 	const arrData = props.data;
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
@@ -53,7 +55,14 @@ export default function MovieList(props) {
 			{arrData.map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
-						<Picture src={imagesBaseUrl + item.poster_path} />
+						<Link href={urlSource + item.id}>
+							<a>
+								<Picture
+									src={imagesBaseUrl + item.poster_path}
+									alt={'image of ' + (item.title || item.name)}
+								/>
+							</a>
+						</Link>
 						<MovieHeadline>{item.title || item.name}</MovieHeadline>
 					</Article>
 				);

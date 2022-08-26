@@ -61,10 +61,81 @@ html {
 }
 
 /* 	vendor reset files 	*/
-* body {
-	color: black;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	font-size: 1rem;
+
+/* source-sans-pro-200 - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 200;
+  src: url('../fonts/source-sans-pro-v21-latin-200.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/source-sans-pro-v21-latin-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v21-latin-200.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-200.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v21-latin-200.svg#SourceSansPro') format('svg'); /* Legacy iOS */
 }
 
+/* source-sans-pro-200italic - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 200;
+  src: url('../fonts/source-sans-pro-v21-latin-200italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/source-sans-pro-v21-latin-200italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v21-latin-200italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-200italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-200italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v21-latin-200italic.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+
+/* source-sans-pro-regular - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/source-sans-pro-v21-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/source-sans-pro-v21-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v21-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v21-latin-regular.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+
+/* source-sans-pro-italic - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../fonts/source-sans-pro-v21-latin-italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/source-sans-pro-v21-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v21-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-italic.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v21-latin-italic.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+
+/* source-sans-pro-600 - latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/source-sans-pro-v21-latin-600.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('../fonts/source-sans-pro-v21-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-sans-pro-v21-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-600.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-sans-pro-v21-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-sans-pro-v21-latin-600.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+}
+
+* body {
+	color: black;
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+	font-size: 1rem;
+	-webkit-font-smoothing: antialiased;
+}
 `;

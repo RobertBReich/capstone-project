@@ -23,7 +23,7 @@ export default function TvShows() {
 			</Head>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
-			{data && <MovieList data={data.results} />}
+			{data && <MovieList data={data.results} type="tv" />}
 		</Layout>
 	);
 }
