@@ -15,7 +15,6 @@ const Ho2 = styled.h2`
 `;
 
 export default function Movies() {
-	//
 	const API_KEY = process.env.API_KEY;
 
 	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
@@ -41,17 +40,17 @@ export default function Movies() {
 
 			{loadingSingle && <p>Loading...</p>}
 			{errorSingle && <p>The content could not be loaded. Please try again.</p>}
-			{dataSingle && <SingleItem data={dataSingle} />}
+			{dataSingle && <SingleItem data={dataSingle} type="movie" />}
 
 			<Ho2>The newest Movies you need to see</Ho2>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
-			{data && <MovieListSmall data={data.results} />}
+			{data && <MovieListSmall data={data.results} type="movie" />}
 
 			<Ho2>The newest TV Series in town</Ho2>
 			{loadingTV && <p>Loading...</p>}
 			{errorTV && <p>The content could not be loaded. Please try again.</p>}
-			{dataTV && <MovieListSmall data={dataTV.results} />}
+			{dataTV && <MovieListSmall data={dataTV.results} type="tv" />}
 		</Layout>
 	);
 }
