@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import toHoursAndMinutes from '../utils/toHoursAndMinutes';
+
 import useStore from './../hooks/useStore';
 
 const Wrapper = styled.section`
@@ -62,16 +64,6 @@ export default function SingleItem(props) {
 	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
 	const objData = props.data;
 
-	// playtime helper function
-	function toHoursAndMinutes(totalMinutes) {
-		const minutes = totalMinutes % 60;
-		const hours = Math.floor(totalMinutes / 60);
-
-		return `${hours}h ${padTo2Digits(minutes)}m`;
-	}
-	function padTo2Digits(num) {
-		return num.toString().padStart(2, '0');
-	}
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
 	const backdropImageUrl = objConfiguration.secure_base_url + objConfiguration.backdrop_sizes[1];

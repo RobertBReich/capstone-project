@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Layout from '../../components/Layout';
 import useFetch from '../../hooks/useFetch';
 import useStore from '../../hooks/useStore';
+import toHoursAndMinutes from '../../utils/toHoursAndMinutes';
 
 const Wrapper = styled.section`
 	padding: 24px;
@@ -62,17 +63,6 @@ const Paragraph = styled.p`
 `;
 
 export default function Movie() {
-	// playtime helper function
-	function toHoursAndMinutes(totalMinutes) {
-		const minutes = totalMinutes % 60;
-		const hours = Math.floor(totalMinutes / 60);
-
-		return `${hours}h ${padTo2Digits(minutes)}m`;
-	}
-	function padTo2Digits(num) {
-		return num.toString().padStart(2, '0');
-	}
-
 	const router = useRouter();
 	const id = router.query.id;
 
