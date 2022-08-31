@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
 import Layout from '../../components/Layout';
+import TrailerMenu from '../../components/TrailerMenu';
 import useFetch from '../../hooks/useFetch';
 import useStore from '../../hooks/useStore';
 import toHoursAndMinutes from '../../utils/toHoursAndMinutes';
@@ -68,7 +69,10 @@ export default function Movie() {
 
 	const API_KEY = process.env.API_KEY;
 	const SINGLE_MOVIE = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`;
+	const TRAILER_URL = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`;
 	const {loading, error, data: objData} = useFetch(SINGLE_MOVIE);
+	const {loading: trailerLoading, error: trailerError, data: trailerData} = useFetch(TRAILER_URL);
+
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
 	const backdropImageUrl = objConfiguration.secure_base_url + objConfiguration.backdrop_sizes[1];
@@ -124,6 +128,12 @@ export default function Movie() {
 								<Paragraph>{objData.overview}</Paragraph>
 							</div>
 						</Article>
+						{/* TrailerMenu */}
+						{trailerLoading && <p>loading...</p>}
+						{trailerError && <p>The content could not be loaded. Try again later.</p>}
+						{trailerData && trailerData.results.length > 0 && (
+							<TrailerMenu trailerData={trailerData} />
+						)}
 					</Wrapper>
 				</div>
 			)}

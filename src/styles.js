@@ -133,9 +133,11 @@ html {
 }
 
 * body {
+	margin-top: 48px;
 	color: black;
 	font-family: 'Source Sans Pro', Arial, sans-serif;
 	font-size: 1rem;
 	-webkit-font-smoothing: antialiased;
+
 }
 `;

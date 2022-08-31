@@ -9,7 +9,7 @@ const Wrapper = styled.section`
 	padding: 24px;
 `;
 const Picture = styled.img`
-	max-width: 185px;
+	max-width: calc(375px - 48px);
 	border-radius: 16px 16px 16px 16px;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
@@ -55,7 +55,7 @@ const Article = styled.article`
 `;
 
 const Paragraph = styled.p`
-	padding: 0 32px;
+	/* padding: 0 32px; */
 	color: white;
 	line-height: 1.5;
 `;
@@ -65,7 +65,7 @@ export default function SingleItem(props) {
 	const objData = props.data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
-	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
+	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[3];
 	const backdropImageUrl = objConfiguration.secure_base_url + objConfiguration.backdrop_sizes[1];
 
 	return (
@@ -109,10 +109,10 @@ export default function SingleItem(props) {
 						/>
 					</a>
 				</Link>
-				<div>
-					<Paragraph>{objData.overview}</Paragraph>
-				</div>
 			</Article>
+			<div>
+				<Paragraph>{objData.overview}</Paragraph>
+			</div>
 		</Wrapper>
 	);
 }
