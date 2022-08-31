@@ -14,6 +14,14 @@ const Ho2 = styled.h2`
 	font-size: 24px;
 `;
 
+const Ho1 = styled.h1`
+	margin: 64px 16px 0 8px;
+	padding: 12px 8px 16px 12px;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 24px;
+`;
+
 export default function Movies() {
 	const API_KEY = process.env.API_KEY;
 
@@ -37,7 +45,7 @@ export default function Movies() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
-
+			<Ho1>Editors Pick</Ho1>
 			{loadingSingle && <p>Loading...</p>}
 			{errorSingle && <p>The content could not be loaded. Please try again.</p>}
 			{dataSingle && <SingleItem data={dataSingle} type="movie" />}

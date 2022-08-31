@@ -5,8 +5,10 @@ const DropdownButton = styled.button`
 	border: none;
 	border-radius: 8px;
 	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: black;
 	font-size: 16px;
+
 	&:hover {
 		background-color: #888;
 		color: white;

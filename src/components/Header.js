@@ -49,6 +49,9 @@ export default function Header() {
 				<Link href="/tvshows">
 					<a>TV</a>
 				</Link>
+				<Link href="/bookmarks">
+					<a>Bookmarks</a>
+				</Link>
 			</nav>
 		</HeaderContainer>
 	);

@@ -12,7 +12,7 @@ const Wrapper = styled.section`
 	padding: 24px;
 `;
 const Picture = styled.img`
-	max-width: 185px;
+	max-width: calc(375px - 48px);
 	border-radius: 16px 16px 16px 16px;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
@@ -58,9 +58,22 @@ const Article = styled.article`
 `;
 
 const Paragraph = styled.p`
-	padding: 0 32px;
+	margin-bottom: 16px;
 	color: white;
 	line-height: 1.5;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+const BackButton = styled.button`
+	width: 34px;
+	height: 34px;
+	border: none;
+	border-radius: 20px;
+	background-color: white;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
 export default function Movie() {
@@ -74,9 +87,16 @@ export default function Movie() {
 	const {loading: trailerLoading, error: trailerError, data: trailerData} = useFetch(TRAILER_URL);
 
 	const objConfiguration = useStore(state => state.objConfiguration);
-	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
+	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[3];
 	const backdropImageUrl = objConfiguration.secure_base_url + objConfiguration.backdrop_sizes[1];
 
+	const setMovieBookmarks = useStore(state => state.setMovieBookmarks);
+
+	function bookmarkHandler() {
+		console.log('Bookmark');
+		console.log(objData);
+		setMovieBookmarks(objData);
+	}
 	return (
 		<Layout>
 			<Head>
@@ -124,21 +144,27 @@ export default function Movie() {
 									alt={'image of ' + (objData.title || objData.name)}
 								/>
 							</div>
-							<div>
-								<Paragraph>{objData.overview}</Paragraph>
-							</div>
 						</Article>
-						{/* TrailerMenu */}
-						{trailerLoading && <p>loading...</p>}
-						{trailerError && <p>The content could not be loaded. Try again later.</p>}
-						{trailerData && trailerData.results.length > 0 && (
-							<TrailerMenu trailerData={trailerData} />
-						)}
+						<div>
+							<Paragraph>{objData.overview}</Paragraph>
+						</div>
+						<ButtonContainer>
+							{/* TrailerMenu */}
+							{trailerLoading && <p>loading...</p>}
+							{trailerError && (
+								<p>The content could not be loaded. Try again later.</p>
+							)}
+							{trailerData && trailerData.results.length > 0 && (
+								<TrailerMenu trailerData={trailerData} />
+							)}
+							<button onClick={bookmarkHandler}>bookmark</button>
+							<BackButton onClick={() => router.back()} alt="back button">
+								↩
+							</BackButton>
+						</ButtonContainer>
 					</Wrapper>
 				</div>
 			)}
-
-			<button onClick={() => router.back()}>back</button>
 		</Layout>
 	);
 }

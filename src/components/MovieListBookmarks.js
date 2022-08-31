@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import useStore from './../hooks/useStore';
+import useStore from '../hooks/useStore';
 
-/* Used pic width's w154 & w185 */
+/* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
 	max-width: 156px;
 	padding: 0;
@@ -26,15 +26,15 @@ const Article = styled.article`
 `;
 
 const Picture = styled.img`
-	max-width: 185px;
+	max-width: 154px;
 	border-radius: 16px 16px 0 0;
 `;
 
 const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
 	padding: 16px;
+	gap: 16px;
 `;
 
 const MovieHeadline = styled.p`
@@ -44,9 +44,10 @@ const MovieHeadline = styled.p`
 	overflow-wrap: break-word;
 `;
 
-export default function MovieList(props) {
+export default function MovieListBookmarks(props) {
 	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
 	const arrData = props.data;
+
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
 

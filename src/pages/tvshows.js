@@ -1,8 +1,17 @@
 import Head from 'next/head';
+import styled from 'styled-components';
 
 import Layout from '../components/Layout';
 import MovieList from '../components/MovieList';
 import useFetch from '../hooks/useFetch';
+
+const Ho1 = styled.h1`
+	margin: 64px 16px 0 8px;
+	padding: 12px 8px 16px 12px;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 24px;
+`;
 
 export default function TvShows() {
 	//
@@ -21,6 +30,7 @@ export default function TvShows() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
+			<Ho1>TV-Shows</Ho1>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
 			{data && <MovieList data={data.results} type="tv" />}
