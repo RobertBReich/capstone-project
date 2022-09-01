@@ -1,11 +1,6 @@
 import create from 'zustand';
 import {persist} from 'zustand/middleware';
 
-// export const useActiveShoppingItemsStore = create(
-// 	persist(
-// 	  (set) => {
-// 		return {
-
 export const useStore = create(
 	persist(set => ({
 		arrMovieBookmarks: [],
@@ -26,25 +21,32 @@ export const useStore = create(
 
 		setMovieBookmarks: ele => {
 			set(state => {
-				// check if id is already used,
 				if (!state.arrMovieBookmarks.find(item => item.id === ele.id)) {
 					state.arrMovieBookmarks = [...state.arrMovieBookmarks, ele];
 				}
-				//localStorage.setItem('bookmarks.movies', JSON.stringify(state.arrMovieBookmarks));
+
 				return {arrMovieBookmarks: state.arrMovieBookmarks};
+			});
+		},
+		removeMovieBookmarks: _id => {
+			set(state => {
+				state.arrMovieBookmarks = state.arrMovieBookmarks.filter(item => item.id != _id);
 			});
 		},
 		setTvBookmarks: ele => {
 			set(state => {
-				// check if id is already used
 				if (!state.arrTvBookmarks.find(item => item.id === ele.id)) {
 					state.arrTvBookmarks = [...state.arrTvBookmarks, ele];
 				}
-				//localStorage.setItem('bookmarks.tv', JSON.stringify(state.arrTvBookmarks));
+
 				return {arrTvBookmarks: state.arrTvBookmarks};
 			});
 		},
-
+		removeTvBookmarks: _id => {
+			set(state => {
+				state.arrTvBookmarks = state.arrTvBookmarks.filter(item => item.id != _id);
+			});
+		},
 		setData: item => {
 			// eslint-disable-next-line no-unused-vars
 			set(state => {

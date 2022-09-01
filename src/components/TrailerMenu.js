@@ -47,8 +47,6 @@ export default function TrailerMenu(props) {
 	const trailerData = props.trailerData.results.sort((a, b) =>
 		a.published_at > b.published_at ? 1 : b.published_at > a.published_at ? -1 : 0
 	);
-	console.log(trailerData[0].name);
-
 	return (
 		<Dropdown>
 			<DropdownButton>▶ Trailers</DropdownButton>

@@ -9,7 +9,7 @@ import useStore from '../../hooks/useStore';
 import toHoursAndMinutes from '../../utils/toHoursAndMinutes';
 
 const Wrapper = styled.section`
-	padding: 24px;
+	padding: 0 24px 24px 24px;
 `;
 const Picture = styled.img`
 	max-width: calc(375px - 48px);
@@ -17,8 +17,8 @@ const Picture = styled.img`
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl2 = styled.h2`
-	padding: 16px 0 0 0;
+const Hl1 = styled.h1`
+	padding: 68px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
 	font-size: 36px;
@@ -39,7 +39,7 @@ const Hl3 = styled.h3`
 `;
 
 const Hl4 = styled.h4`
-	padding: 24px 8px 0 0;
+	padding: 0 8px 0 0;
 	color: white;
 	overflow-wrap: break-word;
 	font-size: 18px;
@@ -54,6 +54,7 @@ const Hl4 = styled.h4`
 
 const Article = styled.article`
 	display: flex;
+	justify-content: space-between;
 	padding: 24px 0;
 `;
 
@@ -75,6 +76,28 @@ const BackButton = styled.button`
 	background-color: white;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
+const BookmarkButton = styled.button`
+	display: inline-block;
+	position: relative;
+	height: 34px;
+	padding: 8px 16px 8px 32px;
+	border: none;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
+	color: black;
+	font-size: 16px;
+
+	&:hover {
+		background-color: #888;
+		color: white;
+	}
+	& img {
+		position: absolute;
+		top: 10px;
+		left: 12px;
+	}
+`;
 
 export default function Movie() {
 	const router = useRouter();
@@ -93,8 +116,6 @@ export default function Movie() {
 	const setMovieBookmarks = useStore(state => state.setMovieBookmarks);
 
 	function bookmarkHandler() {
-		console.log('Bookmark');
-		console.log(objData);
 		setMovieBookmarks(objData);
 	}
 	return (
@@ -118,25 +139,35 @@ export default function Movie() {
 							backgroundRepeat: 'no-repeat, no-repeat',
 						}}
 					>
-						<Hl2>
+						<Hl1>
 							{objData.title || objData.name}
 							<span> ({objData.release_date.split('-')[0]})</span>
-						</Hl2>
+						</Hl1>
 						<Hl3>{objData.tagline}</Hl3>
-						<Hl4>
-							{'Release Date: '}
-							<span>{objData.release_date.split('-').reverse().join('.')}</span>
-							<br />
-							{' Genres: '}
-							<span>
-								{objData.genres.map((item, index) => {
-									return index ? ', ' + item.name : item.name;
-								})}
-							</span>
-							<br />
-							{' Runtime: '}
-							<span>{toHoursAndMinutes(objData.runtime)}</span>
-						</Hl4>
+						<Article>
+							<div>
+								<Hl4>
+									{'Release Date: '}
+									<span>
+										{objData.release_date.split('-').reverse().join('.')}
+									</span>
+									<br />
+									{' Genres: '}
+									<span>
+										{objData.genres.map((item, index) => {
+											return index ? ', ' + item.name : item.name;
+										})}
+									</span>
+									<br />
+									{' Runtime: '}
+									<span>{toHoursAndMinutes(objData.runtime)}</span>
+								</Hl4>
+							</div>
+							<BookmarkButton onClick={bookmarkHandler}>
+								<img src="../images/bookmark.svg" width="14px" height="14px" />
+								bookmark
+							</BookmarkButton>
+						</Article>
 						<Article>
 							<div>
 								<Picture
@@ -157,7 +188,7 @@ export default function Movie() {
 							{trailerData && trailerData.results.length > 0 && (
 								<TrailerMenu trailerData={trailerData} />
 							)}
-							<button onClick={bookmarkHandler}>bookmark</button>
+
 							<BackButton onClick={() => router.back()} alt="back button">
 								↩
 							</BackButton>

@@ -6,8 +6,8 @@ import MovieList from '../components/MovieList';
 import useFetch from '../hooks/useFetch';
 
 const Ho1 = styled.h1`
-	margin: 64px 16px 0 8px;
-	padding: 12px 8px 16px 12px;
+	margin: 0 16px 0 8px;
+	padding: 80px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
 	font-size: 24px;

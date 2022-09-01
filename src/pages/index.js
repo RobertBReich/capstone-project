@@ -6,16 +6,15 @@ import MovieListSmall from '../components/MovieListSmall';
 import SingleItem from '../components/SingleItem';
 import useFetch from '../hooks/useFetch';
 
-const Ho2 = styled.h2`
-	margin: 32px 16px 0 8px;
-	padding: 12px 8px 16px 12px;
+const Ho1 = styled.h1`
+	margin: 0 16px 0 8px;
+	padding: 80px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
 	font-size: 24px;
 `;
-
-const Ho1 = styled.h1`
-	margin: 64px 16px 0 8px;
+const Ho2 = styled.h2`
+	margin: 32px 16px 0 8px;
 	padding: 12px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;

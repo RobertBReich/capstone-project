@@ -3,8 +3,11 @@ import styled from 'styled-components';
 
 import useStore from '../hooks/useStore';
 
+import ComponentSVG from './ComponentSVG';
+
 /* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
+	position: relative;
 	max-width: 156px;
 	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
@@ -22,6 +25,11 @@ const Article = styled.article`
 		100% {
 			opacity: 1;
 		}
+	}
+	& div {
+		position: absolute;
+		top: -5px;
+		right: 5px;
 	}
 `;
 
@@ -51,11 +59,37 @@ export default function MovieListSmall(props) {
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
 
+	const arrMovieBookmarks = useStore(state => state.arrMovieBookmarks);
+	const arrTvBookmarks = useStore(state => state.arrTvBookmarks);
+
+	if (props.type === 'tv') {
+		arrData.map(item => {
+			arrTvBookmarks.map(ele => {
+				if (ele.id === item.id) {
+					item.isBookmarked = true;
+				}
+			});
+		});
+	} else {
+		arrData.map(item => {
+			arrMovieBookmarks.map(ele => {
+				if (ele.id === item.id) {
+					item.isBookmarked = true;
+				}
+			});
+		});
+	}
+
 	return (
 		<Container>
-			{arrData.slice(0, 4).map((item, index) => {
+			{arrData.slice(0, 6).map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
+						{item.isBookmarked && (
+							<div>
+								<ComponentSVG variant="bookmark" size="28px" color="red" />
+							</div>
+						)}
 						<Link href={urlSource + item.id}>
 							<a>
 								<Picture

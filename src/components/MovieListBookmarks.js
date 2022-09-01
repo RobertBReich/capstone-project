@@ -5,6 +5,7 @@ import useStore from '../hooks/useStore';
 
 /* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
+	position: relative;
 	max-width: 156px;
 	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
@@ -14,13 +15,24 @@ const Article = styled.article`
 	background-color: #fff;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: #fff;
-
 	@keyframes fadeIn {
 		0% {
 			opacity: 0;
 		}
 		100% {
 			opacity: 1;
+		}
+	}
+	& button {
+		position: absolute;
+		right: 0;
+		padding: 6px 8px;
+		border: none;
+		border-radius: 0 14px 0 0;
+		background-color: white;
+		&:hover {
+			background-color: #f30;
+			color: white;
 		}
 	}
 `;
@@ -46,16 +58,28 @@ const MovieHeadline = styled.p`
 
 export default function MovieListBookmarks(props) {
 	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
-	const arrData = props.data;
+	let arrData = props.data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
+
+	const removeMovieBookmarks = useStore(state => state.removeMovieBookmarks);
+	const removeTvBookmarks = useStore(state => state.removeTvBookmarks);
+
+	function deleteCard(event) {
+		props.type === 'tv'
+			? removeTvBookmarks(event.target.getAttribute('delete'))
+			: removeMovieBookmarks(event.target.getAttribute('delete'));
+	}
 
 	return (
 		<Container>
 			{arrData.map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
+						<button onClick={deleteCard} delete={item.id}>
+							✖
+						</button>
 						<Link href={urlSource + item.id}>
 							<a>
 								<Picture
