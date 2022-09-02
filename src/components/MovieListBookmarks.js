@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import useStore from './../hooks/useStore';
-import ComponentSVG from './ComponentSVG';
+import useStore from '../hooks/useStore';
 
-/* Used pic width's w154 & w185 */
+/* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
 	position: relative;
 	max-width: 156px;
@@ -26,22 +25,29 @@ const Article = styled.article`
 	}
 `;
 
-const SvgPositionDiv = styled.div`
+const DeleteButton = styled.button`
 	position: absolute;
-	top: -7px;
-	right: 5px;
+	right: 0;
+	padding: 6px 8px 4px 6px;
+	border: none;
+	border-radius: 0 14px 0 0;
+	background-color: white;
+	&:hover {
+		background-color: #f30;
+		color: white;
+	}
 `;
 
 const Picture = styled.img`
-	max-width: 185px;
+	max-width: 154px;
 	border-radius: 16px 16px 0 0;
 `;
 
 const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
 	padding: 16px;
+	gap: 16px;
 `;
 
 const MovieHeadline = styled.p`
@@ -51,44 +57,26 @@ const MovieHeadline = styled.p`
 	overflow-wrap: break-word;
 `;
 
-export default function MovieList(props) {
-	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
-	const arrData = props.data;
+export default function MovieListBookmarks({type, data}) {
+	const urlSource = type === 'tv' ? '/tv/' : '/movie/';
+	let arrData = data;
+
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
 
-	const arrMovieBookmarks = useStore(state => state.arrMovieBookmarks);
-	const arrTvBookmarks = useStore(state => state.arrTvBookmarks);
+	const removeMovieBookmarks = useStore(state => state.removeMovieBookmarks);
+	const removeTvBookmarks = useStore(state => state.removeTvBookmarks);
 
-	if (props.type === 'tv') {
-		// TV
-		arrData.map(item => {
-			arrTvBookmarks.map(ele => {
-				if (ele.id === item.id) {
-					item.isBookmarked = true;
-				}
-			});
-		});
-	} else {
-		// Movie
-		arrData.map(item => {
-			arrMovieBookmarks.map(ele => {
-				if (ele.id === item.id) {
-					item.isBookmarked = true;
-				}
-			});
-		});
+	function deleteCard(_id) {
+		type === 'tv' ? removeTvBookmarks(_id) : removeMovieBookmarks(_id);
 	}
+
 	return (
 		<Container>
 			{arrData.map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
-						{item.isBookmarked && (
-							<SvgPositionDiv>
-								<ComponentSVG variant="bookmark" size="32px" color="red" />
-							</SvgPositionDiv>
-						)}
+						<DeleteButton onClick={() => deleteCard(item.id)}>✖</DeleteButton>
 						<Link href={urlSource + item.id}>
 							<a>
 								<Picture

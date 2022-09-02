@@ -5,8 +5,10 @@ const DropdownButton = styled.button`
 	border: none;
 	border-radius: 8px;
 	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: black;
 	font-size: 16px;
+
 	&:hover {
 		background-color: #888;
 		color: white;
@@ -45,8 +47,6 @@ export default function TrailerMenu(props) {
 	const trailerData = props.trailerData.results.sort((a, b) =>
 		a.published_at > b.published_at ? 1 : b.published_at > a.published_at ? -1 : 0
 	);
-	console.log(trailerData[0].name);
-
 	return (
 		<Dropdown>
 			<DropdownButton>▶ Trailers</DropdownButton>

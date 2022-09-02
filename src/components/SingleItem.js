@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import toHoursAndMinutes from '../utils/toHoursAndMinutes';
-
 import useStore from './../hooks/useStore';
 
 const Wrapper = styled.section`
@@ -14,7 +12,7 @@ const Picture = styled.img`
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl2 = styled.h2`
+const HaZwei = styled.h2`
 	padding: 16px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -26,7 +24,7 @@ const Hl2 = styled.h2`
 	}
 `;
 
-const Hl3 = styled.h3`
+const HaDrei = styled.h3`
 	padding: 0 8px 8px 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -35,29 +33,9 @@ const Hl3 = styled.h3`
 	font-weight: 400;
 `;
 
-const Hl4 = styled.h4`
-	padding: 24px 8px 0 0;
-	color: white;
-	overflow-wrap: break-word;
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 600;
-	line-height: 1.3;
-	& span {
-		font-style: normal;
-		font-weight: 200;
-	}
-`;
-
 const Article = styled.article`
 	display: flex;
 	padding: 24px 0;
-`;
-
-const Paragraph = styled.p`
-	/* padding: 0 32px; */
-	color: white;
-	line-height: 1.5;
 `;
 
 export default function SingleItem(props) {
@@ -81,25 +59,12 @@ export default function SingleItem(props) {
 				backgroundRepeat: 'no-repeat, no-repeat',
 			}}
 		>
-			<Hl2>
+			<HaZwei>
 				{objData.title || objData.name}
 				<span> ({objData.release_date.split('-')[0]})</span>
-			</Hl2>
-			<Hl3>{objData.tagline}</Hl3>
-			<Hl4>
-				{'Release Date: '}
-				<span>{objData.release_date.split('-').reverse().join('.')}</span>
-				<br />
-				{' Genres: '}
-				<span>
-					{objData.genres.map((item, index) => {
-						return index ? ', ' + item.name : item.name;
-					})}
-				</span>
-				<br />
-				{' Runtime: '}
-				<span>{toHoursAndMinutes(objData.runtime)}</span>
-			</Hl4>
+			</HaZwei>
+			<HaDrei>{objData.tagline}</HaDrei>
+
 			<Article>
 				<Link key={objData.id} href={urlSource + objData.id}>
 					<a>
@@ -110,9 +75,6 @@ export default function SingleItem(props) {
 					</a>
 				</Link>
 			</Article>
-			<div>
-				<Paragraph>{objData.overview}</Paragraph>
-			</div>
 		</Wrapper>
 	);
 }

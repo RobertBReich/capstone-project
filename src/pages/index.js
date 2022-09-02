@@ -6,7 +6,14 @@ import MovieListSmall from '../components/MovieListSmall';
 import SingleItem from '../components/SingleItem';
 import useFetch from '../hooks/useFetch';
 
-const Ho2 = styled.h2`
+const HaEins = styled.h1`
+	margin: 0 16px 0 8px;
+	padding: 80px 8px 16px 12px;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 24px;
+`;
+const HaZwei = styled.h2`
 	margin: 32px 16px 0 8px;
 	padding: 12px 8px 16px 12px;
 	color: black;
@@ -37,17 +44,17 @@ export default function Movies() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
-
+			<HaEins>Editors Pick</HaEins>
 			{loadingSingle && <p>Loading...</p>}
 			{errorSingle && <p>The content could not be loaded. Please try again.</p>}
 			{dataSingle && <SingleItem data={dataSingle} type="movie" />}
 
-			<Ho2>The newest Movies you need to see</Ho2>
+			<HaZwei>The newest Movies you need to see</HaZwei>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
 			{data && <MovieListSmall data={data.results} type="movie" />}
 
-			<Ho2>The newest TV Series in town</Ho2>
+			<HaZwei>The newest TV Series in town</HaZwei>
 			{loadingTV && <p>Loading...</p>}
 			{errorTV && <p>The content could not be loaded. Please try again.</p>}
 			{dataTV && <MovieListSmall data={dataTV.results} type="tv" />}

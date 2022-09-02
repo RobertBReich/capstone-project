@@ -133,11 +133,24 @@ html {
 }
 
 * body {
-	margin-top: 48px;
+	background-color: rgba(64, 64, 64, 1);
 	color: black;
 	font-family: 'Source Sans Pro', Arial, sans-serif;
 	font-size: 1rem;
 	-webkit-font-smoothing: antialiased;
 
+}
+.background-white {
+	background-color: white;
+}
+.background-black {
+	background-color: black;
+}
+
+.text-color-white {
+	color: white;
+}
+.text-color-black {
+	color: black;
 }
 `;

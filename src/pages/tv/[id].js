@@ -2,22 +2,23 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
+import ComponentSVG from '../../components/ComponentSVG';
 import Layout from '../../components/Layout';
 import TrailerMenu from '../../components/TrailerMenu';
 import useFetch from '../../hooks/useFetch';
 import useStore from '../../hooks/useStore';
 
 const Wrapper = styled.section`
-	padding: 24px;
+	padding: 0 24px 24px 24px;
 `;
 const Picture = styled.img`
-	max-width: 185px;
-	border-radius: 16px 16px 16px 16px;
+	max-width: calc(375px - 48px);
+	border-radius: 16px;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl2 = styled.h2`
-	padding: 16px 0 0 0;
+const HaEins = styled.h1`
+	padding: 68px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
 	font-size: 36px;
@@ -28,7 +29,7 @@ const Hl2 = styled.h2`
 	}
 `;
 
-const Hl3 = styled.h3`
+const HaDrei = styled.h3`
 	padding: 0 8px 8px 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -37,8 +38,8 @@ const Hl3 = styled.h3`
 	font-weight: 400;
 `;
 
-const Hl4 = styled.h4`
-	padding: 24px 8px 0 0;
+const HaVier = styled.h4`
+	padding: 0 8px 0 0;
 	color: white;
 	overflow-wrap: break-word;
 	font-size: 18px;
@@ -53,13 +54,49 @@ const Hl4 = styled.h4`
 
 const Article = styled.article`
 	display: flex;
+	justify-content: space-between;
 	padding: 24px 0;
 `;
 
 const Paragraph = styled.p`
-	padding: 0 32px;
+	margin-bottom: 16px;
 	color: white;
 	line-height: 1.5;
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+const BackButton = styled.button`
+	width: 34px;
+	height: 34px;
+	border: none;
+	border-radius: 20px;
+	background-color: white;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
+`;
+const BookmarkButton = styled.button`
+	display: inline-block;
+	position: relative;
+	height: 34px;
+	padding: 8px 16px 8px 32px;
+	border: none;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
+	color: black;
+	font-size: 16px;
+
+	&:hover {
+		background-color: #888;
+		color: white;
+	}
+	& img {
+		position: absolute;
+		top: 10px;
+		left: 12px;
+	}
 `;
 
 export default function TvShow() {
@@ -74,8 +111,14 @@ export default function TvShow() {
 	const {loading: trailerLoading, error: trailerError, data: trailerData} = useFetch(TRAILER_URL);
 
 	const objConfiguration = useStore(state => state.objConfiguration);
-	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[2];
+	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[3];
 	const backdropImageUrl = objConfiguration.secure_base_url + objConfiguration.backdrop_sizes[1];
+
+	const setTvBookmarks = useStore(state => state.setTvBookmarks);
+
+	function bookmarkHandler() {
+		setTvBookmarks(objData);
+	}
 
 	return (
 		<Layout>
@@ -98,25 +141,39 @@ export default function TvShow() {
 							backgroundRepeat: 'no-repeat, no-repeat',
 						}}
 					>
-						<Hl2>{objData.title || objData.name}</Hl2>
-						<Hl3>{objData.tagline}</Hl3>
-						<Hl4>
-							{'First air date: '}
-							<span>{objData.first_air_date.split('-').reverse().join('.')}</span>
-							<br />
-							{' Genres: '}
-							<span>
-								{objData.genres.map((item, index) => {
-									return index ? ', ' + item.name : item.name;
-								})}
-							</span>
-							<br />
-							{' Seasons: '}
-							<span>{objData.number_of_seasons}</span>
-							<br />
-							{' Episodes: '}
-							<span>{objData.number_of_episodes}</span>
-						</Hl4>
+						<HaEins>{objData.title || objData.name}</HaEins>
+						<HaDrei>{objData.tagline}</HaDrei>
+						<Article>
+							<div>
+								<HaVier>
+									{'First air date: '}
+									<span>
+										{objData.first_air_date.split('-').reverse().join('.')}
+									</span>
+								</HaVier>
+
+								<HaVier>
+									{' Genres: '}
+									<span>
+										{objData.genres.map((item, index) => {
+											return index ? ', ' + item.name : item.name;
+										})}
+									</span>
+								</HaVier>
+								<HaVier>
+									{' Seasons: '}
+									<span>{objData.number_of_seasons}</span>
+								</HaVier>
+								<HaVier>
+									{' Episodes: '}
+									<span>{objData.number_of_episodes}</span>
+								</HaVier>
+							</div>
+							<BookmarkButton onClick={bookmarkHandler}>
+								<ComponentSVG variant="bookmark" size="14px" color="black" />
+								&nbsp;bookmark
+							</BookmarkButton>
+						</Article>
 						<Article>
 							<div>
 								<Picture
@@ -124,21 +181,24 @@ export default function TvShow() {
 									alt={'image of ' + (objData.title || objData.name)}
 								/>
 							</div>
-							<div>
-								<Paragraph>{objData.overview}</Paragraph>
-							</div>
 						</Article>
-						{/* TrailerMenu */}
-						{trailerLoading && <p>loading...</p>}
-						{trailerError && <p>The content could not be loaded. Try again later.</p>}
-						{trailerData && trailerData.results.length > 0 && (
-							<TrailerMenu trailerData={trailerData} />
-						)}
+
+						<Paragraph>{objData.overview}</Paragraph>
+
+						<ButtonContainer>
+							{/* TrailerMenu */}
+							{trailerLoading && <p>loading...</p>}
+							{trailerError && (
+								<p>The content could not be loaded. Try again later.</p>
+							)}
+							{trailerData && trailerData.results.length > 0 && (
+								<TrailerMenu trailerData={trailerData} />
+							)}
+							<BackButton onClick={() => router.back()}>&#8617;</BackButton>
+						</ButtonContainer>
 					</Wrapper>
 				</div>
 			)}
-
-			<button onClick={() => router.back()}>back</button>
 		</Layout>
 	);
 }
