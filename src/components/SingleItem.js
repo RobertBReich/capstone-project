@@ -12,7 +12,7 @@ const Picture = styled.img`
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl2 = styled.h2`
+const HaZwei = styled.h2`
 	padding: 16px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -24,7 +24,7 @@ const Hl2 = styled.h2`
 	}
 `;
 
-const Hl3 = styled.h3`
+const HaDrei = styled.h3`
 	padding: 0 8px 8px 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -59,11 +59,11 @@ export default function SingleItem(props) {
 				backgroundRepeat: 'no-repeat, no-repeat',
 			}}
 		>
-			<Hl2>
+			<HaZwei>
 				{objData.title || objData.name}
 				<span> ({objData.release_date.split('-')[0]})</span>
-			</Hl2>
-			<Hl3>{objData.tagline}</Hl3>
+			</HaZwei>
+			<HaDrei>{objData.tagline}</HaDrei>
 
 			<Article>
 				<Link key={objData.id} href={urlSource + objData.id}>
@@ -75,7 +75,6 @@ export default function SingleItem(props) {
 					</a>
 				</Link>
 			</Article>
-			<div>{/* <Paragraph>{objData.overview}</Paragraph> */}</div>
 		</Wrapper>
 	);
 }

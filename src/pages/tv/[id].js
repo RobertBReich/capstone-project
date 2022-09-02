@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
+import ComponentSVG from '../../components/ComponentSVG';
 import Layout from '../../components/Layout';
 import TrailerMenu from '../../components/TrailerMenu';
 import useFetch from '../../hooks/useFetch';
@@ -12,11 +13,11 @@ const Wrapper = styled.section`
 `;
 const Picture = styled.img`
 	max-width: calc(375px - 48px);
-	border-radius: 16px 16px 16px 16px;
+	border-radius: 16px;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl1 = styled.h1`
+const HaEins = styled.h1`
 	padding: 68px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -28,7 +29,7 @@ const Hl1 = styled.h1`
 	}
 `;
 
-const Hl3 = styled.h3`
+const HaDrei = styled.h3`
 	padding: 0 8px 8px 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -37,7 +38,7 @@ const Hl3 = styled.h3`
 	font-weight: 400;
 `;
 
-const Hl4 = styled.h4`
+const HaVier = styled.h4`
 	padding: 0 8px 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -140,33 +141,37 @@ export default function TvShow() {
 							backgroundRepeat: 'no-repeat, no-repeat',
 						}}
 					>
-						<Hl1>{objData.title || objData.name}</Hl1>
-						<Hl3>{objData.tagline}</Hl3>
+						<HaEins>{objData.title || objData.name}</HaEins>
+						<HaDrei>{objData.tagline}</HaDrei>
 						<Article>
 							<div>
-								<Hl4>
+								<HaVier>
 									{'First air date: '}
 									<span>
 										{objData.first_air_date.split('-').reverse().join('.')}
 									</span>
-									<br />
+								</HaVier>
+
+								<HaVier>
 									{' Genres: '}
 									<span>
 										{objData.genres.map((item, index) => {
 											return index ? ', ' + item.name : item.name;
 										})}
 									</span>
-									<br />
+								</HaVier>
+								<HaVier>
 									{' Seasons: '}
 									<span>{objData.number_of_seasons}</span>
-									<br />
+								</HaVier>
+								<HaVier>
 									{' Episodes: '}
 									<span>{objData.number_of_episodes}</span>
-								</Hl4>
+								</HaVier>
 							</div>
 							<BookmarkButton onClick={bookmarkHandler}>
-								<img src="../images/bookmark.svg" width="14px" height="14px" />
-								bookmark
+								<ComponentSVG variant="bookmark" size="14px" color="black" />
+								&nbsp;bookmark
 							</BookmarkButton>
 						</Article>
 						<Article>
@@ -177,9 +182,9 @@ export default function TvShow() {
 								/>
 							</div>
 						</Article>
-						<div>
-							<Paragraph>{objData.overview}</Paragraph>
-						</div>
+
+						<Paragraph>{objData.overview}</Paragraph>
+
 						<ButtonContainer>
 							{/* TrailerMenu */}
 							{trailerLoading && <p>loading...</p>}
@@ -189,7 +194,7 @@ export default function TvShow() {
 							{trailerData && trailerData.results.length > 0 && (
 								<TrailerMenu trailerData={trailerData} />
 							)}
-							<BackButton onClick={() => router.back()}>↩</BackButton>
+							<BackButton onClick={() => router.back()}>&#8617;</BackButton>
 						</ButtonContainer>
 					</Wrapper>
 				</div>

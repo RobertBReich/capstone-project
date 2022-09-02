@@ -23,17 +23,18 @@ const Article = styled.article`
 			opacity: 1;
 		}
 	}
-	& button {
-		position: absolute;
-		right: 0;
-		padding: 6px 8px;
-		border: none;
-		border-radius: 0 14px 0 0;
-		background-color: white;
-		&:hover {
-			background-color: #f30;
-			color: white;
-		}
+`;
+
+const DeleteButton = styled.button`
+	position: absolute;
+	right: 0;
+	padding: 6px 8px 4px 6px;
+	border: none;
+	border-radius: 0 14px 0 0;
+	background-color: white;
+	&:hover {
+		background-color: #f30;
+		color: white;
 	}
 `;
 
@@ -56,9 +57,9 @@ const MovieHeadline = styled.p`
 	overflow-wrap: break-word;
 `;
 
-export default function MovieListBookmarks(props) {
-	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
-	let arrData = props.data;
+export default function MovieListBookmarks({type, data}) {
+	const urlSource = type === 'tv' ? '/tv/' : '/movie/';
+	let arrData = data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[1];
@@ -66,10 +67,8 @@ export default function MovieListBookmarks(props) {
 	const removeMovieBookmarks = useStore(state => state.removeMovieBookmarks);
 	const removeTvBookmarks = useStore(state => state.removeTvBookmarks);
 
-	function deleteCard(event) {
-		props.type === 'tv'
-			? removeTvBookmarks(event.target.getAttribute('delete'))
-			: removeMovieBookmarks(event.target.getAttribute('delete'));
+	function deleteCard(_id) {
+		type === 'tv' ? removeTvBookmarks(_id) : removeMovieBookmarks(_id);
 	}
 
 	return (
@@ -77,9 +76,7 @@ export default function MovieListBookmarks(props) {
 			{arrData.map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
-						<button onClick={deleteCard} delete={item.id}>
-							✖
-						</button>
+						<DeleteButton onClick={() => deleteCard(item.id)}>✖</DeleteButton>
 						<Link href={urlSource + item.id}>
 							<a>
 								<Picture

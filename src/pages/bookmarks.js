@@ -6,14 +6,14 @@ import Layout from '../components/Layout';
 import MovieListBookmarks from '../components/MovieListBookmarks';
 import useStore from '../hooks/useStore';
 
-const Ho1 = styled.h1`
+const HaEins = styled.h1`
 	margin: 0 16px 0 8px;
 	padding: 80px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
 	font-size: 24px;
 `;
-const Ho2 = styled.h2`
+const HaZwei = styled.h2`
 	margin: 32px 16px 0 8px;
 	padding: 12px 8px 16px 12px;
 	color: black;
@@ -21,7 +21,7 @@ const Ho2 = styled.h2`
 	font-size: 24px;
 `;
 
-const Ho3 = styled.h3`
+const HaDrei = styled.h3`
 	margin: 0 16px 0 8px;
 	padding: 80px 8px 16px 12px;
 	color: black;
@@ -54,11 +54,11 @@ export default function Movies() {
 					/>
 				</Head>
 				{arrMovieData.length <= 0 && arrTvData.length <= 0 && (
-					<Ho3>Noch keine Bookmarks vorhanden.</Ho3>
+					<HaDrei>Noch keine Bookmarks vorhanden.</HaDrei>
 				)}
-				{arrMovieData.length <= 0 || <Ho1>Movies Bookmarks</Ho1>}
+				{arrMovieData.length <= 0 || <HaEins>Movies Bookmarks</HaEins>}
 				<MovieListBookmarks data={arrMovieData} type="movie" />
-				{arrTvData.length <= 0 || <Ho2>TV Series Bookmarks</Ho2>}
+				{arrTvData.length <= 0 || <HaZwei>TV Series Bookmarks</HaZwei>}
 				<MovieListBookmarks data={arrTvData} type="tv" />
 			</DynamicWrapper>
 		</Layout>

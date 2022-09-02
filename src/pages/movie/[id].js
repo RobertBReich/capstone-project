@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
+import ComponentSVG from '../../components/ComponentSVG';
 import Layout from '../../components/Layout';
 import TrailerMenu from '../../components/TrailerMenu';
 import useFetch from '../../hooks/useFetch';
@@ -13,11 +14,11 @@ const Wrapper = styled.section`
 `;
 const Picture = styled.img`
 	max-width: calc(375px - 48px);
-	border-radius: 16px 16px 16px 16px;
+	border-radius: 16px;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const Hl1 = styled.h1`
+const HaEins = styled.h1`
 	padding: 68px 0 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -29,7 +30,7 @@ const Hl1 = styled.h1`
 	}
 `;
 
-const Hl3 = styled.h3`
+const HaDrei = styled.h3`
 	padding: 0 8px 8px 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -38,7 +39,7 @@ const Hl3 = styled.h3`
 	font-weight: 400;
 `;
 
-const Hl4 = styled.h4`
+const HaVier = styled.h4`
 	padding: 0 8px 0 0;
 	color: white;
 	overflow-wrap: break-word;
@@ -77,10 +78,8 @@ const BackButton = styled.button`
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 const BookmarkButton = styled.button`
-	display: inline-block;
-	position: relative;
 	height: 34px;
-	padding: 8px 16px 8px 32px;
+	padding: 8px 16px 8px 16px;
 	border: none;
 	border-radius: 8px;
 	background-color: #fff;
@@ -91,11 +90,6 @@ const BookmarkButton = styled.button`
 	&:hover {
 		background-color: #888;
 		color: white;
-	}
-	& img {
-		position: absolute;
-		top: 10px;
-		left: 12px;
 	}
 `;
 
@@ -139,33 +133,37 @@ export default function Movie() {
 							backgroundRepeat: 'no-repeat, no-repeat',
 						}}
 					>
-						<Hl1>
+						<HaEins>
 							{objData.title || objData.name}
 							<span> ({objData.release_date.split('-')[0]})</span>
-						</Hl1>
-						<Hl3>{objData.tagline}</Hl3>
+						</HaEins>
+						<HaDrei>{objData.tagline}</HaDrei>
 						<Article>
 							<div>
-								<Hl4>
+								<HaVier>
 									{'Release Date: '}
 									<span>
 										{objData.release_date.split('-').reverse().join('.')}
 									</span>
-									<br />
+								</HaVier>
+
+								<HaVier>
 									{' Genres: '}
 									<span>
 										{objData.genres.map((item, index) => {
 											return index ? ', ' + item.name : item.name;
 										})}
 									</span>
-									<br />
+								</HaVier>
+
+								<HaVier>
 									{' Runtime: '}
 									<span>{toHoursAndMinutes(objData.runtime)}</span>
-								</Hl4>
+								</HaVier>
 							</div>
 							<BookmarkButton onClick={bookmarkHandler}>
-								<img src="../images/bookmark.svg" width="14px" height="14px" />
-								bookmark
+								<ComponentSVG variant="bookmark" size="14px" color="black" />
+								&nbsp;bookmark
 							</BookmarkButton>
 						</Article>
 						<Article>
@@ -176,11 +174,10 @@ export default function Movie() {
 								/>
 							</div>
 						</Article>
-						<div>
-							<Paragraph>{objData.overview}</Paragraph>
-						</div>
+
+						<Paragraph>{objData.overview}</Paragraph>
+
 						<ButtonContainer>
-							{/* TrailerMenu */}
 							{trailerLoading && <p>loading...</p>}
 							{trailerError && (
 								<p>The content could not be loaded. Try again later.</p>
@@ -190,7 +187,7 @@ export default function Movie() {
 							)}
 
 							<BackButton onClick={() => router.back()} alt="back button">
-								↩
+								&#8617;
 							</BackButton>
 						</ButtonContainer>
 					</Wrapper>

@@ -153,5 +153,4 @@ html {
 .text-color-black {
 	color: black;
 }
-
 `;

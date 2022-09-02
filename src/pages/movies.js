@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import MovieList from '../components/MovieList';
 import useFetch from '../hooks/useFetch';
 
-const Ho1 = styled.h1`
+const HaEins = styled.h1`
 	margin: 0 16px 0 8px;
 	padding: 80px 8px 16px 12px;
 	color: black;
@@ -29,7 +29,7 @@ export default function Movies() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
-			<Ho1>Movies</Ho1>
+			<HaEins>Movies</HaEins>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
 			{data && <MovieList data={data.results} />}

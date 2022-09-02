@@ -19,10 +19,10 @@ export const useStore = create(
 		isConfigurationLoaded: false,
 		hasLoadingErrorOccured: false,
 
-		setMovieBookmarks: ele => {
+		setMovieBookmarks: element => {
 			set(state => {
-				if (!state.arrMovieBookmarks.find(item => item.id === ele.id)) {
-					state.arrMovieBookmarks = [...state.arrMovieBookmarks, ele];
+				if (!state.arrMovieBookmarks.find(item => item.id === element.id)) {
+					state.arrMovieBookmarks = [...state.arrMovieBookmarks, element];
 				}
 
 				return {arrMovieBookmarks: state.arrMovieBookmarks};
@@ -33,10 +33,10 @@ export const useStore = create(
 				state.arrMovieBookmarks = state.arrMovieBookmarks.filter(item => item.id != _id);
 			});
 		},
-		setTvBookmarks: ele => {
+		setTvBookmarks: element => {
 			set(state => {
-				if (!state.arrTvBookmarks.find(item => item.id === ele.id)) {
-					state.arrTvBookmarks = [...state.arrTvBookmarks, ele];
+				if (!state.arrTvBookmarks.find(item => item.id === element.id)) {
+					state.arrTvBookmarks = [...state.arrTvBookmarks, element];
 				}
 
 				return {arrTvBookmarks: state.arrTvBookmarks};

@@ -26,13 +26,13 @@ const Article = styled.article`
 			opacity: 1;
 		}
 	}
-	& div {
-		position: absolute;
-		top: -5px;
-		right: 5px;
-	}
 `;
 
+const SvgPositionDiv = styled.div`
+	position: absolute;
+	top: -7px;
+	right: 5px;
+`;
 const Picture = styled.img`
 	max-width: 154px;
 	border-radius: 16px 16px 0 0;
@@ -86,9 +86,9 @@ export default function MovieListSmall(props) {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
 						{item.isBookmarked && (
-							<div>
-								<ComponentSVG variant="bookmark" size="28px" color="red" />
-							</div>
+							<SvgPositionDiv>
+								<ComponentSVG variant="bookmark" size="32px" color="red" />
+							</SvgPositionDiv>
 						)}
 						<Link href={urlSource + item.id}>
 							<a>
