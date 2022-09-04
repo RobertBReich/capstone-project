@@ -18,12 +18,11 @@ const HeaderContainer = styled.header`
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
-		gap: 16px;
 		height: 100%;
 	}
 
 	& a {
-		/* padding-right: 16px; */
+		padding-right: 16px;
 		color: white;
 		font-family: 'Source Sans Pro', Arial, sans-serif;
 		font-size: 18px;
