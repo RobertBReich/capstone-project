@@ -8,7 +8,6 @@ const HeaderContainer = styled.header`
 	flex-wrap: wrap;
 	align-content: center;
 	width: 100%;
-	gap: 16px;
 	height: 48px;
 	padding: 0 24px;
 	overflow: hidden;

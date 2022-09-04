@@ -163,7 +163,7 @@ export default function Movie() {
 							</div>
 							<BookmarkButton onClick={bookmarkHandler}>
 								<ComponentSVG variant="bookmark" size="14px" color="black" />
-								&nbsp;bookmark
+								bookmark
 							</BookmarkButton>
 						</Article>
 						<Article>
