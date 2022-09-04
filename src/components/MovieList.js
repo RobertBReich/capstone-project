@@ -63,8 +63,8 @@ export default function MovieList(props) {
 	if (props.type === 'tv') {
 		// TV
 		arrData.map(item => {
-			arrTvBookmarks.map(ele => {
-				if (ele.id === item.id) {
+			arrTvBookmarks.map(element => {
+				if (element.id === item.id) {
 					item.isBookmarked = true;
 				}
 			});
@@ -72,8 +72,8 @@ export default function MovieList(props) {
 	} else {
 		// Movie
 		arrData.map(item => {
-			arrMovieBookmarks.map(ele => {
-				if (ele.id === item.id) {
+			arrMovieBookmarks.map(element => {
+				if (element.id === item.id) {
 					item.isBookmarked = true;
 				}
 			});

@@ -64,16 +64,16 @@ export default function MovieListSmall(props) {
 
 	if (props.type === 'tv') {
 		arrData.map(item => {
-			arrTvBookmarks.map(ele => {
-				if (ele.id === item.id) {
+			arrTvBookmarks.map(element => {
+				if (element.id === item.id) {
 					item.isBookmarked = true;
 				}
 			});
 		});
 	} else {
 		arrData.map(item => {
-			arrMovieBookmarks.map(ele => {
-				if (ele.id === item.id) {
+			arrMovieBookmarks.map(element => {
+				if (element.id === item.id) {
 					item.isBookmarked = true;
 				}
 			});
