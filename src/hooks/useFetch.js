@@ -19,7 +19,7 @@ export default function useFetch(url) {
 			.then(({data}) => {
 				setState({
 					error: null,
-					data,
+					data: data,
 					loading: false,
 				});
 			})

@@ -40,7 +40,7 @@ const Picture = styled.img`
 const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: 24px;
 	padding: 16px;
 `;
 
