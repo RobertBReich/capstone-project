@@ -2,7 +2,9 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
+import CastListSmall from '../../components/CastListSmall';
 import ComponentSVG from '../../components/ComponentSVG';
+import CrewListSmall from '../../components/CrewListSmall';
 import Layout from '../../components/Layout';
 import TrailerMenu from '../../components/TrailerMenu';
 import useFetch from '../../hooks/useFetch';
@@ -28,6 +30,13 @@ const HaEins = styled.h1`
 	& span {
 		font-weight: 400;
 	}
+`;
+const HaZwei = styled.h2`
+	margin: 32px 16px 0 8px;
+	padding: 12px 8px 0 12px;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 24px;
 `;
 
 const HaDrei = styled.h3`
@@ -78,14 +87,16 @@ const BackButton = styled.button`
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 `;
 const BookmarkButton = styled.button`
+	min-width: 120px;
 	height: 34px;
-	padding: 8px 16px 8px 16px;
+	padding: 8px 12px 8px 12px;
 	border: none;
 	border-radius: 8px;
 	background-color: #fff;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: black;
 	font-size: 16px;
+	white-space: nowrap;
 
 	&:hover {
 		background-color: #888;
@@ -100,8 +111,11 @@ export default function Movie() {
 	const API_KEY = process.env.API_KEY;
 	const SINGLE_MOVIE = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`;
 	const TRAILER_URL = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`;
+	const CAST_URL = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`;
+
 	const {loading, error, data: objData} = useFetch(SINGLE_MOVIE);
 	const {loading: trailerLoading, error: trailerError, data: trailerData} = useFetch(TRAILER_URL);
+	const {loading: castLoading, error: castError, data: castData} = useFetch(CAST_URL);
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[3];
@@ -137,6 +151,7 @@ export default function Movie() {
 							{objData.title || objData.name}
 							<span> ({objData.release_date.split('-')[0]})</span>
 						</HaEins>
+
 						<HaDrei>{objData.tagline}</HaDrei>
 						<Article>
 							<div>
@@ -163,7 +178,7 @@ export default function Movie() {
 							</div>
 							<BookmarkButton onClick={bookmarkHandler}>
 								<ComponentSVG variant="bookmark" size="14px" color="black" />
-								bookmark
+								&nbsp;bookmark
 							</BookmarkButton>
 						</Article>
 						<Article>
@@ -193,6 +208,22 @@ export default function Movie() {
 					</Wrapper>
 				</div>
 			)}
+			<HaZwei className="text-color-black">Cast Members</HaZwei>
+			<Article>
+				<div>
+					{castLoading && <p>Loading...</p>}
+					{castError && <p>The content could not be loaded. Please try again.</p>}
+					{castData && <CastListSmall data={castData.cast} type="movie" />}
+				</div>
+			</Article>
+			<HaZwei className="text-color-black">Crew Members</HaZwei>
+			<Article>
+				<div>
+					{castLoading && <p>Loading...</p>}
+					{castError && <p>The content could not be loaded. Please try again.</p>}
+					{castData && <CrewListSmall data={castData.crew} type="movie" />}
+				</div>
+			</Article>
 		</Layout>
 	);
 }

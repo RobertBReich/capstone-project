@@ -42,7 +42,7 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 16px;
-	gap: 16px;
+	gap: 24px;
 `;
 
 const MovieHeadline = styled.p`
