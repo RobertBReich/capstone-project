@@ -16,21 +16,10 @@ const HaEins = styled.h1`
 export default function Movies() {
 	const API_KEY = process.env.API_KEY;
 	let pageCounter = 1;
-	let GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`;
+	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`;
 
-	let {loading, error, data} = useFetch(GET_MOVIES);
+	const {loading, error, data} = useFetch(GET_MOVIES);
 
-	function loadMoreContent() {
-		pageCounter += 1;
-		let GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`;
-		fetch(GET_MOVIES)
-			.then(response => response.json())
-			.then(newData => {
-				let intermediateData = data;
-				data = [];
-				data.results = [...intermediateData.results, ...newData.results];
-			});
-	}
 	return (
 		<Layout>
 			<Head>
@@ -44,8 +33,7 @@ export default function Movies() {
 			<HaEins>Movies</HaEins>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
-			{data && <MovieList data={data.results} />}
-			<button onClick={loadMoreContent}>load more content</button>
+			{data && <MovieList data={data.results} type="movie" />}
 		</Layout>
 	);
 }

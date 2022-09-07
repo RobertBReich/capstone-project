@@ -28,13 +28,14 @@ const HaZwei = styled.h2`
 export default function Movies() {
 	const API_KEY = process.env.API_KEY;
 	const strLanguage = 'en-us'; //'de-DE';
+	const strLanguageDe = 'de-DE';
 
 	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${strLanguage}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
 	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=${strLanguage}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-	// Dune: 438631 - Star Wars I: 11
-	const GET_EDITORPICK = `https://api.themoviedb.org/3/movie/550?api_key=${API_KEY}&language=${strLanguage}`;
+	// Dune: 438631 - Star Wars I: 11  Top Gun: 361743
+	const GET_EDITORPICK = `https://api.themoviedb.org/3/movie/550?api_key=${API_KEY}&language=${strLanguageDe}`;
 
 	const {loading: loadingSingle, error: errorSingle, data: dataSingle} = useFetch(GET_EDITORPICK);
 	const {loading, error, data} = useFetch(GET_MOVIES);
