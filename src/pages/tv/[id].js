@@ -96,8 +96,8 @@ const BookmarkButton = styled.button`
 	font-size: 16px;
 	white-space: nowrap;
 
-	&:hover {
-		background-color: #888;
+	&:active {
+		background-color: #4f4;
 		color: white;
 	}
 `;
@@ -122,7 +122,6 @@ export default function TvShow() {
 	function bookmarkHandler() {
 		setTvBookmarks(objData);
 	}
-
 	return (
 		<Layout>
 			<Head>
@@ -202,21 +201,16 @@ export default function TvShow() {
 				</div>
 			)}
 			<HaZwei className="text-color-black">Cast Members</HaZwei>
-			<Article>
-				<div>
-					{castLoading && <p>Loading...</p>}
-					{castError && <p>The content could not be loaded. Please try again.</p>}
-					{castData && <CastListSmall data={castData.cast} type="movie" />}
-				</div>
-			</Article>
+
+			{castLoading && <p>Loading...</p>}
+			{castError && <p>The content could not be loaded. Please try again.</p>}
+			{castData && <CastListSmall data={castData.cast} type="movie" />}
+
 			<HaZwei className="text-color-black">Crew Members</HaZwei>
-			<Article>
-				<div>
-					{castLoading && <p>Loading...</p>}
-					{castError && <p>The content could not be loaded. Please try again.</p>}
-					{castData && <CrewListSmall data={castData.crew} type="movie" />}
-				</div>
-			</Article>
+
+			{castLoading && <p>Loading...</p>}
+			{castError && <p>The content could not be loaded. Please try again.</p>}
+			{castData && <CrewListSmall data={castData.crew} type="movie" />}
 		</Layout>
 	);
 }

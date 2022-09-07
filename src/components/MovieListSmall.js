@@ -7,7 +7,9 @@ import ComponentSVG from './ComponentSVG';
 
 /* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
+	display: flex;
 	position: relative;
+	flex: 0 0 auto;
 	max-width: 156px;
 	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
@@ -17,7 +19,6 @@ const Article = styled.article`
 	background-color: #fff;
 	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
 	color: #fff;
-
 	@keyframes fadeIn {
 		0% {
 			opacity: 0;
@@ -26,6 +27,23 @@ const Article = styled.article`
 			opacity: 1;
 		}
 	}
+`;
+
+const ColumnScroller = styled.article`
+	display: flex;
+	flex-wrap: nowrap;
+	align-content: flex-start;
+	align-items: flex-start;
+	gap: 16px;
+	padding: 16px 16px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+`;
+
+const InnerScroller = styled.div`
+	display: flex;
+	flex-direction: column;
+	max-width: 155px;
 `;
 
 const SvgPositionDiv = styled.div`
@@ -38,15 +56,8 @@ const Picture = styled.img`
 	border-radius: 16px 16px 0 0;
 `;
 
-const Container = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	padding: 16px;
-	gap: 24px;
-`;
-
 const MovieHeadline = styled.p`
-	min-height: 56px;
+	min-height: 76px;
 	padding: 12px 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
@@ -81,27 +92,29 @@ export default function MovieListSmall(props) {
 	}
 
 	return (
-		<Container>
-			{arrData.slice(0, 6).map((item, index) => {
+		<ColumnScroller>
+			{arrData.map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
-						{item.isBookmarked && (
-							<SvgPositionDiv>
-								<ComponentSVG variant="bookmark" size="32px" color="red" />
-							</SvgPositionDiv>
-						)}
-						<Link href={urlSource + item.id}>
-							<a>
-								<Picture
-									src={imagesBaseUrl + item.poster_path}
-									alt={'image of ' + (item.title || item.name)}
-								/>
-							</a>
-						</Link>
-						<MovieHeadline>{item.title || item.name}</MovieHeadline>
+						<InnerScroller>
+							{item.isBookmarked && (
+								<SvgPositionDiv>
+									<ComponentSVG variant="bookmark" size="32px" color="red" />
+								</SvgPositionDiv>
+							)}
+							<Link href={urlSource + item.id}>
+								<a>
+									<Picture
+										src={imagesBaseUrl + item.poster_path}
+										alt={'image of ' + (item.title || item.name)}
+									/>
+								</a>
+							</Link>
+							<MovieHeadline>{item.title || item.name}</MovieHeadline>
+						</InnerScroller>
 					</Article>
 				);
 			})}
-		</Container>
+		</ColumnScroller>
 	);
 }

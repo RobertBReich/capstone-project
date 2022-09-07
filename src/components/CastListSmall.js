@@ -4,7 +4,9 @@ import useStore from '../hooks/useStore';
 
 /* Used pic width's w92 w154 & w185 */
 const Article = styled.article`
+	display: flex;
 	position: relative;
+	flex: 0 0 auto;
 	max-width: 156px;
 	padding: 0;
 	animation: fadeIn 1s ${({delay}) => delay}s forwards;
@@ -24,17 +26,26 @@ const Article = styled.article`
 		}
 	}
 `;
+const ColumnScroller = styled.article`
+	display: flex;
+	flex-wrap: nowrap;
+	align-content: flex-start;
+	align-items: flex-start;
+	gap: 16px;
+	padding: 16px 16px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+`;
+
+const InnerScroller = styled.div`
+	display: flex;
+	flex-direction: column;
+	max-width: 155px;
+`;
 
 const Picture = styled.img`
 	max-width: 154px;
 	border-radius: 16px 16px 0 0;
-`;
-
-const Container = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	padding: 16px;
-	gap: 24px;
 `;
 
 const MovieHeadline = styled.p`
@@ -54,37 +65,40 @@ const MovieTitle = styled.p`
 	font-style: normal;
 	font-weight: 400;
 `;
+const InnerText = styled.div`
+	min-height: 76px;
+`;
 
 export default function CastListSmall(props) {
-	// const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
 	const arrData = props.data;
 
 	const objConfiguration = useStore(state => state.objConfiguration);
 	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.profile_sizes[1];
 
-	// const arrMovieBookmarks = useStore(state => state.arrMovieBookmarks);
-	// const arrTvBookmarks = useStore(state => state.arrTvBookmarks);
-
 	return (
-		<Container>
+		<ColumnScroller>
 			{arrData.slice(0, 24).map((item, index) => {
 				return (
 					<Article key={item.id} delay={0.05 * index}>
-						<Picture
-							src={
-								item.profile_path
-									? imagesBaseUrl + item.profile_path
-									: '../../../images/noimage185x278.jpg'
-							}
-							alt={'image of ' + item.name}
-						/>
+						<InnerScroller>
+							<Picture
+								src={
+									item.profile_path
+										? imagesBaseUrl + item.profile_path
+										: '../../../images/noimage185x278.jpg'
+								}
+								alt={'image of ' + item.name}
+							/>
+							<InnerText>
+								<MovieHeadline>{item.name}</MovieHeadline>
 
-						<MovieHeadline>{item.name}</MovieHeadline>
-						<MovieTitle>{item.character}</MovieTitle>
-						<br></br>
+								<MovieTitle>{item.character}</MovieTitle>
+								<br></br>
+							</InnerText>
+						</InnerScroller>
 					</Article>
 				);
 			})}
-		</Container>
+		</ColumnScroller>
 	);
 }

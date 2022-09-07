@@ -98,8 +98,8 @@ const BookmarkButton = styled.button`
 	font-size: 16px;
 	white-space: nowrap;
 
-	&:hover {
-		background-color: #888;
+	&:active {
+		background-color: #4f4;
 		color: white;
 	}
 `;
@@ -112,7 +112,6 @@ export default function Movie() {
 	const SINGLE_MOVIE = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`;
 	const TRAILER_URL = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`;
 	const CAST_URL = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`;
-
 	const {loading, error, data: objData} = useFetch(SINGLE_MOVIE);
 	const {loading: trailerLoading, error: trailerError, data: trailerData} = useFetch(TRAILER_URL);
 	const {loading: castLoading, error: castError, data: castData} = useFetch(CAST_URL);
@@ -209,21 +208,16 @@ export default function Movie() {
 				</div>
 			)}
 			<HaZwei className="text-color-black">Cast Members</HaZwei>
-			<Article>
-				<div>
-					{castLoading && <p>Loading...</p>}
-					{castError && <p>The content could not be loaded. Please try again.</p>}
-					{castData && <CastListSmall data={castData.cast} type="movie" />}
-				</div>
-			</Article>
+
+			{castLoading && <p>Loading...</p>}
+			{castError && <p>The content could not be loaded. Please try again.</p>}
+			{castData && <CastListSmall data={castData.cast} type="movie" />}
+
 			<HaZwei className="text-color-black">Crew Members</HaZwei>
-			<Article>
-				<div>
-					{castLoading && <p>Loading...</p>}
-					{castError && <p>The content could not be loaded. Please try again.</p>}
-					{castData && <CrewListSmall data={castData.crew} type="movie" />}
-				</div>
-			</Article>
+
+			{castLoading && <p>Loading...</p>}
+			{castError && <p>The content could not be loaded. Please try again.</p>}
+			{castData && <CrewListSmall data={castData.crew} type="movie" />}
 		</Layout>
 	);
 }

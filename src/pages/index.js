@@ -8,10 +8,14 @@ import useFetch from '../hooks/useFetch';
 
 const HaEins = styled.h1`
 	margin: 0 16px 0 8px;
-	padding: 80px 8px 16px 12px;
+	padding: 0 8px 16px 12px;
 	color: black;
 	overflow-wrap: break-word;
 	font-size: 24px;
+	& span {
+		font-size: 16px;
+		font-style: italic;
+	}
 `;
 const HaZwei = styled.h2`
 	margin: 32px 16px 0 8px;
@@ -23,12 +27,14 @@ const HaZwei = styled.h2`
 
 export default function Movies() {
 	const API_KEY = process.env.API_KEY;
+	const strLanguage = 'en-us'; //'de-DE';
 
-	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+	const GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${strLanguage}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
+	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=${strLanguage}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-	const GET_EDITORPICK = `https://api.themoviedb.org/3/movie/438631?api_key=${API_KEY}&language=en-US`;
+	// Dune: 438631 - Star Wars I: 11
+	const GET_EDITORPICK = `https://api.themoviedb.org/3/movie/550?api_key=${API_KEY}&language=${strLanguage}`;
 
 	const {loading: loadingSingle, error: errorSingle, data: dataSingle} = useFetch(GET_EDITORPICK);
 	const {loading, error, data} = useFetch(GET_MOVIES);
@@ -44,17 +50,19 @@ export default function Movies() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
-			<HaEins>Editors Pick</HaEins>
+			<HaEins>
+				Feature <span>(Pinke Seife ist geiler Shit!)</span>
+			</HaEins>
 			{loadingSingle && <p>Loading...</p>}
 			{errorSingle && <p>The content could not be loaded. Please try again.</p>}
 			{dataSingle && <SingleItem data={dataSingle} type="movie" />}
 
-			<HaZwei>The newest Movies you need to see</HaZwei>
+			<HaZwei>New Movies</HaZwei>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
 			{data && <MovieListSmall data={data.results} type="movie" />}
 
-			<HaZwei>The newest TV Series in town</HaZwei>
+			<HaZwei>New TV Series</HaZwei>
 			{loadingTV && <p>Loading...</p>}
 			{errorTV && <p>The content could not be loaded. Please try again.</p>}
 			{dataTV && <MovieListSmall data={dataTV.results} type="tv" />}
