@@ -50,10 +50,10 @@ const Flexbox = styled.div`
 `;
 
 const HaZwei = styled.h2`
-	padding: 16px 0 0 0;
+	padding: 12px 0 0 0;
 	color: black;
 	overflow-wrap: break-word;
-	font-size: 20px;
+	font-size: 18px;
 	font-style: normal;
 	font-weight: 600;
 	& span {
@@ -111,8 +111,7 @@ export default function MovieList(props) {
 											{item.release_date &&
 												item.release_date.split('-').reverse().join('.')}
 										</GreyText>
-										<br></br>
-										<span> {item.overview.split('.')[0]}</span>.
+										<span>{item.overview.substring(0, 80)}..</span>.
 									</div>
 								</Flexbox>
 							</a>

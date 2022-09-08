@@ -43,7 +43,14 @@ const SearchBarContainer = styled.section`
 `;
 
 const ResultContainer = styled.div`
+	display: flex;
 	padding: 0 24px 64px 24px;
+	gap: 16px;
+	@media screen and (max-width: 600px) {
+		display: block;
+		width: 100%;
+		gap: 16px;
+	}
 `;
 
 const SearchButton = styled.button`
@@ -60,6 +67,15 @@ const SearchButton = styled.button`
 
 	&:focus {
 		outline: 0;
+	}
+`;
+const ResponsiveContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
 	}
 `;
 
@@ -125,14 +141,18 @@ export default function Movies() {
 				</form>
 			</SearchBarContainer>
 			<ResultContainer>
-				<HaEins>Movies</HaEins>
-				{loading && <p>Loading...</p>}
-				{error && <p>The content could not be loaded. Please try again.</p>}
-				{data && <MovieListSearch data={data.results} />}
-				<HaZwei>TV-Shows</HaZwei>
-				{loadingTv && <p>Loading...</p>}
-				{errorTv && <p>The content could not be loaded. Please try again.</p>}
-				{dataTv && <MovieListSearch data={dataTv.results} type="tv" />}
+				<ResponsiveContainer>
+					<HaEins>Movies</HaEins>
+					{loading && <p>Loading...</p>}
+					{error && <p>The content could not be loaded. Please try again.</p>}
+					{data && <MovieListSearch data={data.results} />}
+				</ResponsiveContainer>
+				<ResponsiveContainer>
+					<HaZwei>TV-Shows</HaZwei>
+					{loadingTv && <p>Loading...</p>}
+					{errorTv && <p>The content could not be loaded. Please try again.</p>}
+					{dataTv && <MovieListSearch data={dataTv.results} type="tv" />}
+				</ResponsiveContainer>
 			</ResultContainer>
 		</Layout>
 	);
