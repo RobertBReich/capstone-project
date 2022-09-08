@@ -154,8 +154,4 @@ html {
 	color: black;
 }
 
-
-.sbx-custom__reset:focus {
-  outline: 0;
-}
 `;

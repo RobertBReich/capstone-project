@@ -27,13 +27,48 @@ const Article = styled.article`
 			opacity: 1;
 		}
 	}
+	& > a {
+		color: black;
+		text-decoration: none;
+	}
+`;
+
+const Picture = styled.img`
+	max-width: 92px;
+	padding-right: 16px;
+	border-radius: 16px 0 0 16px;
+`;
+
+const Flexbox = styled.div`
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 16px;
+	background-color: #fff;
+	box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2);
+`;
+
+const HaZwei = styled.h2`
+	padding: 16px 0 0 0;
+	color: black;
+	overflow-wrap: break-word;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	& span {
+		font-weight: 400;
+	}
+`;
+const GreyText = styled.p`
+	color: grey;
 `;
 
 export default function MovieList(props) {
 	const urlSource = props.type === 'tv' ? '/tv/' : '/movie/';
 	const arrData = props.data;
-	// const objConfiguration = useStore(state => state.objConfiguration);
-	// const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[0];
+	const objConfiguration = useStore(state => state.objConfiguration);
+	const imagesBaseUrl = objConfiguration.secure_base_url + objConfiguration.poster_sizes[0];
 
 	const arrMovieBookmarks = useStore(state => state.arrMovieBookmarks);
 	const arrTvBookmarks = useStore(state => state.arrTvBookmarks);
@@ -64,11 +99,22 @@ export default function MovieList(props) {
 					<Article key={item.id}>
 						<Link href={urlSource + item.id}>
 							<a>
-								{/* <Picture
-									src={imagesBaseUrl + item.poster_path}
-									alt={'image of ' + (item.title || item.name)}
-								/> */}
-								<h2>{item.title || item.name}</h2>
+								<Flexbox>
+									<Picture
+										src={imagesBaseUrl + item.poster_path}
+										alt={'image of ' + (item.title || item.name)}
+									/>
+									<div>
+										<HaZwei>{item.title || item.name}</HaZwei>
+										<GreyText>
+											{' '}
+											{item.release_date &&
+												item.release_date.split('-').reverse().join('.')}
+										</GreyText>
+										<br></br>
+										<span> {item.overview.split('.')[0]}</span>.
+									</div>
+								</Flexbox>
 							</a>
 						</Link>
 					</Article>
