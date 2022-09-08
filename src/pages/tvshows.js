@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
 import Layout from '../components/Layout';
@@ -13,13 +14,46 @@ const HaEins = styled.h1`
 	font-size: 24px;
 `;
 
+const MoreContentButton = styled.button`
+	width: 100%;
+	padding: 16px;
+	border: none;
+	background-color: #08a;
+	color: white;
+	text-align: center;
+`;
+
 export default function TvShows() {
-	//
 	const API_KEY = process.env.API_KEY;
-	const GET_TV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
 
-	const {loading, error, data} = useFetch(GET_TV);
+	const [pageCounter, setPageCounter] = useState(2);
+	const [allData, setData] = useState([]);
+	const [nextURL, setNextURL] = useState(
+		`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2
+		}`
+	);
+	const [apiURL, setApiURL] = useState(
+		`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
+	);
+	const {loading, error, data} = useFetch(apiURL);
 
+	useEffect(() => {
+		if (data) {
+			data.results = [...allData, ...data.results];
+			setData(() => [...data.results]);
+		}
+	}, [data]);
+
+	useEffect(() => {
+		setNextURL(
+			`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`
+		);
+	}, [pageCounter]);
+
+	function loadNextContent() {
+		setPageCounter(1 + pageCounter);
+		setApiURL(nextURL);
+	}
 	return (
 		<Layout>
 			<Head>
@@ -34,6 +68,7 @@ export default function TvShows() {
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
 			{data && <MovieList data={data.results} type="tv" />}
+			<MoreContentButton onClick={loadNextContent}>load more content</MoreContentButton>
 		</Layout>
 	);
 }

@@ -14,46 +14,46 @@ const HaEins = styled.h1`
 	font-size: 24px;
 `;
 
+const MoreContentButton = styled.button`
+	width: 100%;
+	padding: 16px;
+	border: none;
+	background-color: #08a;
+	color: white;
+	text-align: center;
+`;
+
 export default function Movies() {
 	const API_KEY = process.env.API_KEY;
 
-	// let GET_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`;
-
-	const [pageCounter, setPageCounter] = useState(1);
+	const [pageCounter, setPageCounter] = useState(2);
 	const [allData, setData] = useState([]);
-	const [nextURL, setNextURL] = useState('');
+	const [nextURL, setNextURL] = useState(
+		`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2
+		}`
+	);
 	const [apiURL, setApiURL] = useState(
-		`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`
+		`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
 	);
 	const {loading, error, data} = useFetch(apiURL);
 
 	useEffect(() => {
-		console.log('currentData:');
-		console.log(allData);
-
-		let pageNextCounter = pageCounter + 1;
-
-		setNextURL(
-			`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNextCounter}`
-		);
 		if (data) {
-			setData(() => [...allData, ...data.results]);
-
-			console.log('data:');
-			console.log(data);
+			data.results = [...allData, ...data.results];
+			setData(() => [...data.results]);
 		}
 	}, [data]);
 
+	useEffect(() => {
+		setNextURL(
+			`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageCounter}`
+		);
+	}, [pageCounter]);
+
 	function loadNextContent() {
-		console.log(nextURL);
-		setPageCounter(pageCounter + 1);
+		setPageCounter(1 + pageCounter);
 		setApiURL(nextURL);
 	}
-	// function loadPreviousContent() {
-	// 	console.log(nextURL);
-	// 	setPageCounter(pageCounter - 1);
-	// 	setApiURL(previousURL);
-	// }
 
 	return (
 		<Layout>
@@ -68,10 +68,8 @@ export default function Movies() {
 			<HaEins>Movies</HaEins>
 			{loading && <p>Loading...</p>}
 			{error && <p>The content could not be loaded. Please try again.</p>}
-
 			{data && <MovieList data={data.results} />}
-			{/* <button onClick={loadPreviousContent}>load previous content</button> */}
-			<button onClick={loadNextContent}>load next content</button>
+			<MoreContentButton onClick={loadNextContent}>load more content</MoreContentButton>
 		</Layout>
 	);
 }
