@@ -50,6 +50,9 @@ export default function Header() {
 				<Link href="/bookmarks">
 					<a>Bookmarks</a>
 				</Link>
+				<Link href="/search">
+					<a>Search</a>
+				</Link>
 			</nav>
 		</HeaderContainer>
 	);
