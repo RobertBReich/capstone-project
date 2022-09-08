@@ -153,4 +153,9 @@ html {
 .text-color-black {
 	color: black;
 }
+
+
+.sbx-custom__reset:focus {
+  outline: 0;
+}
 `;

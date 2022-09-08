@@ -10,11 +10,14 @@ const Article = styled.article`
 	/* max-width: 156px; */
 	padding: 0;
 	/* animation: fadeIn 1s ${({delay}) => delay}s forwards; */
+
 	/* border: 1px solid rgba(0, 0, 0, 0.25);
+
 	border-radius: 16px; */
+
 	/* opacity: 0; */
+
 	background-color: #fff;
-	/* box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.2); */
 	color: #fff;
 	@keyframes fadeIn {
 		0% {
