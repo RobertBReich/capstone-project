@@ -6,17 +6,7 @@ import useStore from './../hooks/useStore';
 /* Used pic width's w154 & w185 */
 const Article = styled.article`
 	position: relative;
-
-	/* max-width: 156px; */
 	padding: 0;
-	/* animation: fadeIn 1s ${({delay}) => delay}s forwards; */
-
-	/* border: 1px solid rgba(0, 0, 0, 0.25);
-
-	border-radius: 16px; */
-
-	/* opacity: 0; */
-
 	background-color: #fff;
 	color: #fff;
 	@keyframes fadeIn {

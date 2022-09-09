@@ -25,7 +25,7 @@ const HaZwei = styled.h2`
 const Input = styled.input`
 	position: relative;
 	width: 100%;
-	margin: 16px auto;
+	/* margin: 16px auto; */
 	padding: 12px 16px 12px 40px;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
@@ -39,6 +39,7 @@ const SearchBarContainer = styled.section`
 	position: relative;
 	flex-direction: column;
 	margin-top: 64px;
+
 	padding: 0 24px;
 `;
 
@@ -125,6 +126,7 @@ export default function Movies() {
 					content="Robert Reichs capstone project"
 				/>
 			</Head>
+
 			<SearchBarContainer>
 				<form onSubmit={handleSearch}>
 					<Input

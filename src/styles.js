@@ -152,6 +152,7 @@ html {
 }
 .text-color-black {
 	color: black;
+	color: red;
 }
 
 `;
