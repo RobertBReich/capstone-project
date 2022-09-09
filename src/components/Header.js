@@ -25,7 +25,7 @@ const HeaderContainer = styled.header`
 		padding-right: 16px;
 		color: white;
 		font-family: 'Source Sans Pro', Arial, sans-serif;
-		font-size: 18px;
+		font-size: 17px;
 		font-weight: 600;
 		text-decoration: none;
 	}
@@ -49,6 +49,9 @@ export default function Header() {
 				</Link>
 				<Link href="/bookmarks">
 					<a>Bookmarks</a>
+				</Link>
+				<Link href="/search">
+					<a>Search</a>
 				</Link>
 			</nav>
 		</HeaderContainer>
